@@ -14,7 +14,7 @@
 - **Đào data (`data/preclass/` — 107.709 dòng sự kiện, 436 học viên có hoạt động):**
   - **101 / 1.245 lượt (8,1%)** hỏi dưới bài giảng bị hệ thống đánh dấu **`missing_context = True`** (nội dung bài giảng tại đoạn đó thiếu ngữ cảnh để giải đáp, cao nhất ở `Day01/d01-r1-v01.txt` với 19 lượt và `Day02/d02-r2-v01.txt` với 10 lượt).
   - **231 / 604 lượt (38,2%)** câu trả lời trên bài giảng **không dẫn ra được mốc trích dẫn nào** trong bài (`moc_trich_dan = []`).
-  - **232 / 436 học viên có hoạt động (53,2%)** đã phải thực hiện tổng cộng **4.322 lượt tua video (`video_seeked`)** để dò lại nội dung bài giảng.
+  - **232 / 436 học viên có hoạt động (53,2%)** có tổng cộng **4.322 lượt tua video (`video_seeked`)** *(tua video có thể là hành vi học bình thường; data không cho biết lý do tua)*.
   - **399 / 1.968 lượt (20,3%)** học viên trả lời sai ngay lần thử đầu tiên (`lan_thu = 1`) ở bài kiểm tra `pre_post_post`; cá biệt ở các ý kiến thức mà lời giảng/câu hỏi chưa khớp rõ như `ai_product_canvas` sai **12/15 (80,0%)**, `agentic_fit_scoring_decision` sai **12/20 (60,0%)**, `feedback_signal_types` sai **8/15 (53,3%)**, `react_reasoning_acting_pattern` sai **9/18 (50,0%)**.
 - **Phản hồi từ phía Người dạy / Kiểm duyệt (Giảng viên & Lab Coach — `n = 3` phản hồi đầu tiên, `n` nhỏ không ghi %):**
   - **3/3 người** chỉ ra lỗi trực tiếp ở chất lượng nội dung do AI sinh ra: **sinh sai nội dung / bịa nội dung ("quá bịp")** và **hiển thị công thức không rõ nét/sai định dạng**.
@@ -43,10 +43,10 @@
 
 ## 4. Các nguồn có khớp nhau không (Kiểm chéo Data ↔ Người dạy ↔ Người học)
 
-**Khớp nhau tuyệt đối ở cả 3 góc độ:**
+**Các nguồn cùng chỉ về một hướng, nhưng mức độ chắc khác nhau:**
 - **Góc Người dạy (Giảng viên / Lab Coach)** xác nhận nguyên nhân gốc là model AI *"sinh sai nội dung"* và *"nội dung quá bịp"* (ảo giác trôi chảy).
 - **Góc Người học (Học viên L3)** chỉ ra chính xác hậu quả khi các câu khẳng định/câu hỏi chưa được kiểm chứng đó lọt lên trang Pre-class: (1) câu hỏi hỏi về *Google PAIR* hay *Lost in the Middle* nhưng **không có trong slide nguồn**; (2) bản tóm tắt AI **bỏ sót điều kiện ngoại lệ** (*"quy tắc ba điểm"*) làm ví dụ ra kết quả ngược lại; (3) đáp án câu hỏi thiếu tường minh khiến học viên **phải tua lại video khoảng 5 phút** và mở lại tài liệu gốc để kiểm tra.
-- **Góc Dữ liệu log (`data/preclass/`)** đo lường đúng hiện tượng đó trên quy mô toàn khoá: **53,2% học viên (232/436 người)** phải tua lại video tổng cộng **4.322 lần**, **8,1% lượt hỏi (101/1.245)** rơi vào đoạn bài giảng thiếu ngữ cảnh (`missing_context = True`), và tỷ lệ làm sai câu hỏi lần đầu ở các chủ đề khó lên tới **50%–80%**.
+- **Góc Dữ liệu log (`data/preclass/`) — tín hiệu phụ, không đo trực tiếp lỗi nội dung:** `missing_context` và `moc_trich_dan` là cờ của **câu trả lời trợ giảng AI**, không phải nhãn chất lượng kịch bản bài giảng; tua video không chứng minh học viên đang dò lỗi. Các số: **53,2% học viên (232/436 người)** phải tua lại video tổng cộng **4.322 lần**, **8,1% lượt hỏi (101/1.245)** rơi vào đoạn bài giảng thiếu ngữ cảnh (`missing_context = True`), và tỷ lệ làm sai câu hỏi lần đầu ở các chủ đề khó lên tới **50%–80%**.
 
 ## 5. Kết luận
 

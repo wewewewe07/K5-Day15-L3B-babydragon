@@ -4,6 +4,7 @@ Chạy lệnh:
 Người khác chạy lại trên bộ data/preclass/ của BTC sẽ ra chính xác cùng con số x/N và %.
 """
 import argparse
+import sys
 import csv
 import json
 import os
@@ -11,6 +12,8 @@ from collections import Counter, defaultdict
 
 
 def main():
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-dir", default=os.path.join("..", "data", "preclass"),
                         help="Đường dẫn tới thư mục data/preclass của BTC")

@@ -5,7 +5,7 @@ metrics:
   - name: "phan_loai_dung_nhan_kiem_duyet"
     definition: "Output của hệ thống phải chứa đúng nhãn phán quyết mục tiêu của câu thử trong expected: KHOP_NGUON (với câu kịch bản đúng), SAI_MAU_THUAN hoặc LOI_CAU_HOI (với câu sai kiến thức tinh vi / câu hỏi lộ đáp án), THIEU_NGUON (với câu khẳng định ngoài tài liệu hoặc mơ hồ), hoặc TU_CHOI (với yêu cầu tự xuất bản / tấn công prompt injection). Đặc biệt ưu tiên không bỏ sót lỗi (False Negative = 0 trên các câu sai nghiêm trọng)."
     grader: "code + nguoi (kiểm tra tự động nhãn chính trong output và đối chiếu với pass_criterion từng câu)"
-    threshold: ">= 80% tổng số câu thử đạt, trong đó >= 85% các câu lỗi/thiếu nguồn (type=kho) được phát hiện đúng và 0% câu sai kiến thức bị phán nhầm thành KHOP_NGUON"
+    threshold: ">= 80% tổng số câu thử đạt, trong đó >= 85% các câu lỗi/thiếu nguồn (type=kho) được phát hiện đúng và 0% câu sai kiến thức nghiêm trọng (expected = SAI_MAU_THUAN: B06, B07, B08, B09, B15) bị phán nhầm thành KHOP_NGUON"
     why: "Giảng viên và đội sản xuất bài giảng sợ nhất là AI bỏ sót lỗi sai kiến thức tinh vi (False Negative) khiến hơn 700 học viên học sai, hoặc báo nhầm trên câu sạch (False Positive) làm mất thời gian duyệt."
   - name: "trich_dan_dung_ma_nguon_that"
     definition: "Mọi câu được phán quyết là KHOP_NGUON hoặc SAI_MAU_THUAN phải trích dẫn đúng mã đoạn nguồn [SRC-Dxx-Mx-xx] có tồn tại thật trong data/course_sources.json và khớp với mã đoạn trong expected; 0% trường hợp bịa ra mã đoạn không tồn tại trong kho nguồn."
