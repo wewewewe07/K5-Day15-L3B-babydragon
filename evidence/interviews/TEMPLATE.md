@@ -1,54 +1,39 @@
-# Bộ Kịch Bản Phỏng Vấn Người Dùng (Mom Test) — Dự bị 3 Lát Cắt A5 · D2 · E1
+# Bộ Kịch Bản Phỏng Vấn Người Dùng (Mom Test) — Track A3 (Sản xuất & Kiểm duyệt bài giảng bằng AI)
 
 > Điền ở guide bước 1.2. Ôn lại: ngày 2 · lab ngày 2. Tham khảo: `further-reading/mom-test-summary.md`.
 > **Chép file này thành `P1.md`, `P2.md`, `P3.md`…** trong cùng thư mục `evidence/interviews/` — mỗi người được phỏng vấn một file.
 > **Quy tắc bắt buộc:**
-> - Phỏng vấn **≥3 người ngoài nhóm**, đúng vai người dùng của lát cắt đã chọn.
-> - **Không ghi tên, SĐT, email, mã học viên**: chỉ ghi `P1 + vai` (VD: `P1 · Key Coach L3B` hoặc `P1 · Học viên L3B hay đặt đồ ăn nhóm`).
+> - Phỏng vấn **≥3 người ngoài nhóm**, đúng vai người dùng (Thành viên đội sản xuất bài giảng online / Giảng viên / TA / Lab Coach rà bài hoặc Học viên gặp lỗi/thiếu nguồn trên bài pre-class).
+> - **Không ghi tên, SĐT, email, mã học viên**: chỉ ghi `P1 + vai` (VD: `P1 · Thành viên đội sản xuất bài giảng` hoặc `P2 · Giảng viên / TA rà bài pre-class`).
 > - Khi tổng hợp với `n = 3..5`, **chỉ ghi `x/n người` (VD: `3/3 người`), TUYỆT ĐỐI KHÔNG GHI %**.
-> - Chỉ hỏi chuyện **đã xảy ra trong 1 tháng qua**, không giới thiệu ý tưởng AI của nhóm, không hỏi *"Bạn có thích tính năng X không?"*.
 
 ---
 
-## 🅰️ KỊCH BẢN PHỎNG VẤN 1: Track A5 (Người được hỏi: Key Coach / Day Lead / Lab Coach / Ban đào tạo)
+## 🎤 KỊCH BẢN 1: Hỏi Đội sản xuất bài giảng online / Giảng viên / TA duyệt bài
 
-**Tin nhắn / Lời mở đầu tại lớp:**
-> *"Chào anh/chị/bạn, nhóm mình (babydragon - L3B) đang tìm hiểu quy trình xếp ca, chốt phòng và gửi thông báo trước buổi Lab của khoá mình. Cho mình xin 10 phút hỏi về buổi Lab gần nhất anh/chị/bạn tham gia điều phối hoặc nhận lịch nhé!"*
+**Lời mở đầu:**
+> *"Chào anh/chị/bạn, nhóm mình (babydragon - L3B) đang tìm hiểu quy trình soạn và kiểm duyệt nội dung bài giảng, slide và câu hỏi tương tác trên trang pre-class của khoá mình. Cho mình xin 10 phút hỏi về bài giảng gần nhất anh/chị/bạn tham gia soạn hoặc duyệt nhé!"*
 
-### 5 Câu hỏi chuẩn Mom Test (A5)
-1. **Lần gần nhất** anh/chị/bạn phải kiểm tra phòng học hoặc xếp/đổi ca Lab Coach trước buổi học là buổi nào (ngày nào)?
-2. Hôm đó từ lúc có thông tin phòng hoặc có người báo bận/đổi ca đến lúc chốt xong thông báo cho các nhóm thì **các bước diễn ra như thế nào**? Anh/chị/bạn phải mở những file hay kênh chat nào?
-3. Lần đó tốn khoảng **bao nhiêu phút**? Có chỗ nào giữa bảng lịch giảng dạy chung, bảng lịch Lab Coach và nhóm Zalo bị **lệch nhau hoặc chờ xác nhận sát giờ** không?
-4. Trong 1 tháng qua, đã có lần nào xảy ra sự cố (như báo nhầm phòng, sót đơn đổi ca, hoặc trùng người) chưa? Lần đó xử lý hậu quả thế nào?
-5. Hiện tại anh/chị/bạn đang dùng cách gì để không bị sót khi phòng đổi sát giờ? Cách đó còn điểm gì làm anh/chị/bạn mệt nhất?
-
----
-
-## 🅳 KỊCH BẢN PHỎNG VẤN 2: Track D2 (Người được hỏi: Người từng đặt đồ ăn hộ nhóm ≥4 người trong 1 tháng qua)
-
-**Tin nhắn / Lời mở đầu tại lớp:**
-> *"Chào bạn, nhóm mình đang tìm hiểu cách mọi người đặt đồ ăn chung cho nhóm trên ShopeeFood/GrabFood. Bạn cho mình hỏi 10 phút về lần gần nhất bạn đứng ra đặt đồ ăn cho cả nhóm/phòng làm việc nhé!"*
-
-### 5 Câu hỏi chuẩn Mom Test (D2)
-1. **Lần gần nhất** bạn đứng ra đặt đồ ăn cho một nhóm (từ 4 người trở lên) là khi nào, dịp gì và đặt cho bao nhiêu người?
-2. Trong nhóm hôm đó có ai có **yêu cầu đặc biệt** (như ăn chay, dị ứng hải sản/đậu phộng/sữa, kiêng cay, hoặc giới hạn ngân sách mỗi người) không? Bạn đã gom và nhớ các yêu cầu đó bằng cách nào?
-3. Kể lại lúc bạn mở app chọn món: từ lúc mở menu đến lúc chốt xong giỏ hàng mất **bao nhiêu phút**? Bạn đã làm sao để kiểm tra xem tổng tiền (cộng cả phí ship/trừ mã giảm giá) có bị lố ngân sách nhóm không?
-4. Trong 1 tháng qua bạn đặt hộ nhóm mấy lần? Đã có lần nào đặt xong mới phát hiện **món có thành phần người kia không ăn được** hoặc **tổng tiền sau ship bị vượt dự tính** chưa?
-5. Tại sao lần đó bạn không dùng tính năng "Đặt đơn nhóm" (mỗi người tự chọn) mà vẫn phải tự tay chọn món cho mọi người?
+### 5 Câu hỏi chuẩn Mom Test
+1. **Bài giảng gần nhất** anh/chị/bạn tham gia sản xuất hoặc kiểm duyệt nội dung (kịch bản lời đọc, slide, câu hỏi giữa video) là bài của ngày học nào?
+2. Khi bản nháp kịch bản / bộ câu hỏi do AI sinh ra xong, anh/chị/bạn đã làm **những bước cụ thể nào** để kiểm tra xem kiến thức có đúng và khớp với tài liệu gốc của khoá không?
+3. Khâu đọc dò và đối chiếu nguồn cho một bài giảng như vậy mất khoảng **bao nhiêu phút/giờ**? Trong 1 tháng qua anh/chị/bạn phải duyệt bao nhiêu bài như vậy?
+4. Ở lần duyệt gần nhất đó, anh/chị/bạn phát hiện ra **những kiểu lỗi nào** mà AI hay mắc phải nhất (ví dụ: khẳng định không có trong nguồn, dùng lệch thuật ngữ của khoá, câu hỏi đúng chữ nhưng sai ý, hay lộ đáp án)?
+5. Đã có lần nào một câu chưa chuẩn hoặc thiếu ngữ cảnh bị lọt lên trang pre-class khiến học viên hỏi lại hoặc hiểu nhầm chưa? Lúc đó đội phải xử lý thế nào?
 
 ---
 
-## 🅴 KỊCH BẢN PHỎNG VẤN 3: Track E1 (Người được hỏi: Người dùng ví điện tử / App ngân hàng có >50 giao dịch/tháng)
+## 🎤 KỊCH BẢN 2: Hỏi Học viên L3 / Lab Coach (Người chịu hậu quả khi bài giảng/câu hỏi pre-class mơ hồ hoặc thiếu căn cứ)
 
-**Tin nhắn / Lời mở đầu tại lớp:**
-> *"Chào bạn, nhóm mình đang tìm hiểu thói quen xem lại lịch sử chi tiêu trên ví điện tử và app ngân hàng. Bạn cho mình hỏi 10 phút về lần gần nhất bạn mở app xem tháng vừa rồi tiền đi đâu nhé! (Mình chỉ hỏi trải nghiệm, tuyệt đối không xem hay hỏi số tiền/số dư của bạn)."*
+**Lời mở đầu:**
+> *"Chào bạn, nhóm mình đang tìm hiểu trải nghiệm học video và làm câu hỏi tương tác trên trang pre-class của khoá. Cho mình hỏi 10 phút về lần gần nhất bạn học bài pre-class mà gặp câu hỏi hoặc đoạn giải thích khó hiểu nhé!"*
 
-### 5 Câu hỏi chuẩn Mom Test (E1)
-1. **Lần gần nhất** bạn mở app ngân hàng hoặc ví điện tử (MoMo, ZaloPay...) để kiểm tra xem tháng này mình tiêu vào việc gì nhiều nhất là khi nào?
-2. Lúc mở danh sách giao dịch hoặc biểu đồ thống kê của app lên, bạn đã làm những bước gì để biết tổng tiền mình tiêu cho ăn uống, đi lại hay mua sắm?
-3. Có bao nhiêu giao dịch trong sao kê mà nhìn vào dòng mô tả (mã viết tắt POS hoặc chuyển khoản không ghi rõ nội dung) bạn **không nhận ra ngay là chi cho việc gì**, hoặc bị app gom hết vào mục *"Chuyển tiền / Khác"*?
-4. Lần đó bạn mất **bao nhiêu phút** để tra soát lại? Bạn xử lý các khoản không nhớ rõ đó thế nào (mở app khác dò lại, tự cộng tay ra Excel/Note, hay bỏ cuộc)?
-5. Trong 1 tháng qua bạn kiểm tra chi tiêu mấy lần? Điều gì làm bạn nản nhất mỗi lần muốn rà soát lại sao kê?
+### 5 Câu hỏi chuẩn Mom Test
+1. **Lần gần nhất** bạn xem bài giảng và làm câu hỏi trên trang pre-class là bài Day mấy?
+2. Trong tháng qua, đã có lần nào bạn làm câu hỏi giữa video/cuối bài hoặc đọc slide mà thấy **nội dung câu hỏi chưa được giảng rõ trong đoạn video trước đó**, hoặc cách giải thích bị mâu thuẫn/lộ đáp án chưa? Kể lại cụ thể lần gần nhất đó?
+3. Lúc gặp câu hoặc đoạn bài như vậy, bạn đã làm gì tiếp theo (tua lại video tìm nguồn, bấm hỏi trợ giảng AI dưới video, hay bỏ qua)? Việc đó làm bạn mất thêm **bao nhiêu phút**?
+4. Khi bạn bấm hỏi trợ giảng AI ở những đoạn đó, câu trả lời có chỉ rõ được đoạn nào trong bài nói không, hay trả lời chung chung?
+5. Trong 1 tháng học vừa qua, bạn gặp tình huống phải tự dò lại nguồn/mốc bài giảng như vậy khoảng mấy lần?
 
 ---
 
@@ -56,7 +41,7 @@
 # 📝 KHUNG GHI CHÉP CHUẨN (Copy phần dưới đây ra `P1.md`, `P2.md`, `P3.md`)
 # =====================================================================
 
-# P_ · [vai cụ thể] · [trực tiếp tại lớp L3B / gọi video] · [27/11/2026 __:__] · hỏi: TV_ · ghi: TV_
+# P_ · [vai cụ thể, vd: Đội sản xuất bài giảng / TA / Học viên L3B] · [trực tiếp tại lớp] · [27/11/2026 __:__] · hỏi: TV_ · ghi: TV_
 
 ## Câu đã hỏi (giữ nguyên câu)
 
@@ -83,4 +68,4 @@
 
 ## Kết luận 1 dòng
 
-Có gặp chỗ vướng [A5 / D2 / E1]? Có / Không / Một phần — vì sao. Có điều gì **ngược** với điều nhóm nghĩ?
+Có gặp chỗ vướng khi kiểm chứng nội dung/căn cứ bài giảng pre-class không? Có / Không / Một phần — vì sao. Có điều gì **ngược** với điều nhóm nghĩ?
