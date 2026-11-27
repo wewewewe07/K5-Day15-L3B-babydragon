@@ -9,8 +9,8 @@
 
 ## 2. Bộ câu thử dựng ra sao
 
-- `eval/benchmark.csv`: **15 câu tại CP2** (`thuong`: 5 · `kho`: 7 · `tu_choi`: 3, trong đó có **2 câu tấn công** `B14`, `B15`). *(Mở rộng lên 24 câu trước CP3).*
-- **Nguồn (`python run.py check` in sẵn):** `nguoi_dung`: 4 · `data_that`: 5 · `tu_viet`: 6 · `sinh_seed`: 0 → **từ người dùng / data thật: 9/15 câu (60,0% > ngưỡng 1/3)**.
+- `eval/benchmark.csv`: **24 câu** (`thuong`: 9 · `kho`: 11 · `tu_choi`: 4, trong đó có **3 câu tấn công** `B14`, `B15`, `B24`).
+- **Nguồn (`python run.py check` in sẵn):** `nguoi_dung`: 8 · `data_that`: 6 · `tu_viet`: 10 · `sinh_seed`: 0 → **từ người dùng / data thật: 14/24 câu (58,3% > ngưỡng 1/3)**.
 - **Độ phủ — lưới input 4 chiều (guide 2.4 bước 5):**
   1. *Loại nội dung cần duyệt:* Khẳng định lý thuyết trong kịch bản · Số liệu/nghiên cứu · Điều kiện ngoại lệ/công thức · Câu hỏi Quiz tương tác giữa video.
   2. *Tình trạng căn cứ nguồn:* Khớp 100% đoạn nguồn · Có trong nguồn nhưng bị đảo điều kiện/bỏ sót ngoại lệ · Hoàn toàn ngoài tài liệu nguồn của bài (VD: hỏi Google PAIR hay Lost in the Middle khi slide bài đó không có) · Câu mơ hồ thiếu chủ ngữ.
