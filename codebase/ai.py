@@ -13,6 +13,7 @@ Hỗ trợ sẵn:
 """
 import json
 import os
+import time
 import urllib.error
 import urllib.request
 
@@ -42,16 +43,27 @@ API_KEY = (os.environ.get("API_KEY") or "").strip()
 OPENAI_BASE_URL = (os.environ.get("OPENAI_BASE_URL") or "https://api.openai.com/v1/chat/completions").strip()
 
 
-def post_json(url, headers, body, timeout=60):
-    """Gửi POST JSON, trả về JSON phản hồi. Chỉ dùng thư viện chuẩn (urllib)."""
+def post_json(url, headers, body, timeout=180, retries=1):
+    """Gửi POST JSON, trả về JSON phản hồi. Chỉ dùng thư viện chuẩn (urllib).
+    Model có suy nghĩ (thinking) có thể trả lời chậm > 60 giây → timeout 180 giây,
+    thử lại 1 lần khi hết giờ đọc hoặc lỗi 429/5xx tạm thời."""
     req = urllib.request.Request(
         url, data=json.dumps(body).encode("utf-8"), method="POST",
         headers=dict({"Content-Type": "application/json"}, **headers))
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
-            data = json.loads(r.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        raise RuntimeError("HTTP %d: %s" % (e.code, e.read().decode("utf-8", "replace")[:300]))
+    for attempt in range(retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                data = json.loads(r.read().decode("utf-8"))
+            break
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 500, 502, 503, 504) and attempt < retries:
+                time.sleep(5)
+                continue
+            raise RuntimeError("HTTP %d: %s" % (e.code, e.read().decode("utf-8", "replace")[:300]))
+        except (TimeoutError, urllib.error.URLError):
+            if attempt < retries:
+                continue
+            raise
     if SHOW_RAW:
         print(json.dumps(data, ensure_ascii=False, indent=2)[:3000])
     return data

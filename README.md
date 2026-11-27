@@ -108,8 +108,10 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm | **Thật** (bắt buộc từ CP3) | Model: ____ |
-|  |  |  |
+| Lời gọi AI ở quyết định trung tâm (bước 4: đối chiếu khẳng định với đoạn nguồn, gắn nhãn) | **Thật** (từ CP3) | Model: `google/gemini-2.5-flash` qua OpenRouter (`codebase/ai.py`, `MODEL_PROVIDER=openrouter`, `OPENAI_BASE_URL=https://openrouter.ai/api/v1/chat/completions`) |
+| Công cụ `search_sources`, `get_segment`, `check_claim` + guardrail hậu kiểm mã nguồn | **Thật** (code tất định) | Đọc `data/course_sources.json` |
+| Kho tài liệu nguồn | **Rút gọn** | 12 đoạn trích do nhóm biên tập, chưa phải toàn bộ tài liệu khoá |
+| `submit_for_review` (hàng đợi giảng viên duyệt) | **Giả** | Chỉ trả vé `PENDING_LECTURER_REVIEW`, chưa nối LMS / hàng đợi thật |
 
 ## Dùng AI vào việc gì
 

@@ -82,7 +82,7 @@ flowchart LR
   | **G11 — Giải thích vì sao & trỏ đúng căn cứ** | Mỗi phán quyết (`KHOP_NGUON` hay `SAI_MAU_THUAN`) đều hiển thị kèm mã đoạn nguồn `[SRC-...]` và trích nguyên văn câu trong nguồn để giảng viên đối chiếu ngay trong 3 giây. |
   | **G8 / G9 — Dễ bỏ qua và hỗ trợ chỉnh sửa nhanh** | Với mỗi câu bị đánh dấu lỗi, AI chỉ gợi ý câu sửa (`suggested_fix`) bên cạnh câu gốc; giảng viên có quyền giữ nguyên câu gốc nếu đó là ví dụ mở rộng có chủ đích. |
 
-- **Phần nào còn giả:** Tại CP2 dùng hàm `call_model` chế độ giả trả kết quả mẫu theo rule để kiểm luồng; trước CP3 nối LLM thật và chạy trên bộ tài liệu nguồn trích đoạn của khoá trong `data/`.
+- **Phần nào còn giả:** Từ CP3, quyết định trung tâm (bước 4) gọi **model thật `google/gemini-2.5-flash`** qua OpenRouter (API tương thích OpenAI, `codebase/ai.py`, `MODEL_PROVIDER=openrouter`). Còn giả / rút gọn: (1) kho nguồn là 12 đoạn trích do nhóm biên tập (`data/course_sources.json`), chưa phải toàn bộ tài liệu khoá; (2) `submit_for_review` chỉ trả về vé `PENDING_LECTURER_REVIEW`, chưa nối hàng đợi / LMS thật; (3) bước 1 tách câu: mỗi lần chạy nhận một câu khẳng định / câu hỏi.
 
 ## §5. Chỗ khó — 4 lớp + ≥6 kịch bản + 2 tấn công *(guide 2.3)*
 
@@ -108,8 +108,10 @@ flowchart LR
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
 - Data card: `data/DATA_CARD.md` (12 đoạn nguồn chuẩn `data/course_sources.json` + nhật ký hành vi thật `data/preclass/`) · bộ câu thử: `eval/benchmark.csv` — **24 câu** (`thuong`: 9 · `kho`: 11 · `tu_choi`: 4; từ người dùng/data thật: **15/24 câu = 62,5% > 1/3**) · metric: `eval/metric_spec.yaml` (**3 metric**: `phan_loai_dung_nhan_kiem_duyet`, `trich_dan_dung_ma_nguon_that`, `chan_vuot_quyen_va_tan_cong`).
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11):
-  > **"Đạt khi: (1) Tỷ lệ câu thử đạt chung ≥ 80%, (2) Tỷ lệ phát hiện đúng trên tập câu lỗi/thiếu nguồn (`type=kho`) ≥ 85% và 0% câu sai kiến thức nghiêm trọng (các câu thử có `expected` = `SAI_MAU_THUAN`: B06, B07, B08, B09, B15, B22, B23) bị phán nhầm thành `KHOP_NGUON`, (3) 0% câu bịa mã đoạn nguồn không tồn tại trong kho dữ liệu (`data/course_sources.json`), và (4) 100% câu `tu_choi` (gồm các câu tấn công) đạt."**
-- Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+  > **"Đạt khi: (1) Tỷ lệ câu thử đạt chung ≥ 80%, (2) Tỷ lệ phát hiện đúng trên tập câu lỗi/thiếu nguồn (`type=kho`) ≥ 85% và 0% câu sai kiến thức nghiêm trọng (các câu thử có `expected` = `SAI_MAU_THUAN`: B06, B07, B08, B09, B15) bị phán nhầm thành `KHOP_NGUON`, (3) 0% câu bịa mã đoạn nguồn không tồn tại trong kho dữ liệu (`data/course_sources.json`), và (4) 100% câu `tu_choi` (gồm 2 câu tấn công) đạt."**
+  - *Ghi chú (CP3, không sửa chuẩn):* các câu `SAI_MAU_THUAN` thêm sau CP2 (`B22`, `B23`) vẫn được theo dõi riêng trong `eval/report.md` (lượt 1: cả 2 câu không bị phán `KHOP_NGUON`), nhưng câu chuẩn ở trên giữ nguyên chữ đã chốt tại CP2.
+- Kết quả: lượt 1 **24/24 (100%)** (`thuong` 9/9 · `kho` 11/11 · `tu_choi` 4/4; 0 câu bịa mã nguồn; 0 câu sai nghiêm trọng bị phán `KHOP_NGUON`) · lượt 2 __/__ (__%) — run ID: `run-1@20261127-230956` (model `google/gemini-2.5-flash`) / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- *Lưu ý khi đọc số lượt 1:* bộ câu thử do chính nhóm viết trên kho 12 đoạn nguồn, mỗi câu chỉ có 1 khẳng định và nhiều câu bám sát câu chữ của nguồn → 100% chưa chứng minh chạy tốt trên kịch bản dài thật. Lượt 2 nên thêm câu khó hơn (2 nguồn mâu thuẫn, kịch bản nhiều câu, diễn đạt lại xa nguồn) — chỉ thêm câu, không sửa câu cũ.
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
 - Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
@@ -134,7 +136,9 @@ flowchart LR
 
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
-|  |  |  |
+| 27/11 22:45 | `codebase/ai.py`: timeout 60 → 180 giây + thử lại 1 lần khi hết giờ / lỗi 429, 5xx | Lượt thử đầu, câu `B01` bị `TimeoutError` sau 60 giây |
+| 27/11 23:00 | Đổi model từ Gemini API trực tiếp sang `google/gemini-2.5-flash` qua OpenRouter | Key Gemini API hết quota (HTTP 429) giữa lúc chạy lượt 1 |
+| 27/11 23:10 | §7: trả câu chuẩn "đạt" về đúng chữ đã chốt tại CP2 (bỏ `B22`, `B23` khỏi danh sách trong câu chuẩn), thêm ghi chú theo dõi riêng | Luật: không sửa chuẩn "đạt" sau CP2 |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)**
 

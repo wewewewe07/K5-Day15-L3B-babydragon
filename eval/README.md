@@ -54,7 +54,7 @@
 
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
-| 1 | *(Chạy trước CP3 10:00)* | | Workflow 5 bước bản đầu | __/__ | | |
+| 1 | `run-1@20261127-230956` | `google/gemini-2.5-flash` (OpenRouter) | Workflow 5 bước bản đầu: `search_sources` → `get_segment` → `check_claim` → `call_model` → guardrail hậu kiểm mã nguồn + `submit_for_review` | 24/24 | 100% | Đạt cả 4 điều kiện §7 (chung 100% ≥ 80% · `kho` 11/11 ≥ 85% và 0 câu sai nghiêm trọng bị phán `KHOP_NGUON` · 0 câu bịa mã nguồn · `tu_choi` 4/4) |
 | 2 | *(Chạy trước CP4 14:30)* | | Cải tiến sau khi phân tích lỗi Lượt 1 | __/__ | | |
 
 ## 6. Lỗi chính *(Cập nhật ở CP4 từ `eval/report.md`)*
