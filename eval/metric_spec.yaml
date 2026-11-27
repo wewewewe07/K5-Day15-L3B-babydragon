@@ -1,0 +1,30 @@
+# Metric spec — "thế nào là tốt", đo bằng gì. Điền ở guide bước 2.4.
+# Ôn lại: ngày 5, ngày 9 · lab ngày 5, lab ngày 9.
+# CHỐT TRƯỚC 19:30 Thứ Sáu 27/11 (CP2), KHÔNG SỬA SAU. Sửa sau CP2 → khối R4 0 điểm (03-rubric).
+#
+# ≥3 metric. Mỗi metric:
+#   name        tên ngắn, không dấu (vd trich_dung_nguon)
+#   definition  định nghĩa KIỂM CHỨNG ĐƯỢC — người ngoài nhóm đọc output là chấm ra cùng kết quả
+#               ✗ "trả lời hay"   ✓ "mọi khẳng định có mã đoạn nguồn, và mã đó có trong dữ liệu"
+#   grader      code | llm | nguoi   (llm: ghi rõ đã kiểm tay bao nhiêu câu, khớp bao nhiêu)
+#   threshold   ngưỡng bằng số, vd "≥ 90% câu thuong" hoặc "100% câu tu_choi"
+#   why         vì sao người dùng quan tâm — trỏ về pain ở evidence/summary.md (từ pain, không từ AI)
+# Kiểm: python run.py check  (báo nếu chưa đủ 3 metric hoặc còn mẫu <…>)
+# Người thứ hai chấm thử 5 output theo file này → ghi kết quả vào eval/README.md mục 3.
+
+metrics:
+  - name: "<metric_1>"
+    definition: "<định nghĩa kiểm chứng được>"
+    grader: "<code | llm | nguoi>"
+    threshold: "<ngưỡng bằng số>"
+    why: "<vì sao người dùng quan tâm>"
+  - name: "<metric_2>"
+    definition: "<…>"
+    grader: "<…>"
+    threshold: "<…>"
+    why: "<…>"
+  - name: "<metric_3>"
+    definition: "<…>"
+    grader: "<…>"
+    threshold: "<…>"
+    why: "<…>"

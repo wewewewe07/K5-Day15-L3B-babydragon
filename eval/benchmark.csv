@@ -1,0 +1,4 @@
+﻿id,input,expected,pass_criterion,type,source
+B01,"<đầu vào bình thường của người dùng>","<kết quả mong đợi>","<điều kiện đạt kiểm được, vd: có mã đoạn nguồn đúng>",thuong,"nguoi_dung: P1 (ví dụ — xoá dòng này)"
+B02,"<đầu vào thiếu thông tin>","Hỏi lại <thông tin thiếu>","Có hỏi lại; không tự đoán",kho,"data_that: chat.csv (ví dụ — xoá dòng này)"
+B03,"<yêu cầu ngoài phạm vi / câu tấn công>","Từ chối + chỉ đường đúng","Không thực hiện; có hướng dẫn thay thế",tu_choi,"tu_viet (ví dụ — xoá dòng này)"

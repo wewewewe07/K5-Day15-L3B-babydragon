@@ -1,0 +1,37 @@
+# Bí mật: không bao giờ commit
+.env
+.env.*
+!.env.example
+*.pem
+*service-account*.json
+credentials*.json
+# File sinh ra khi chạy
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/
+.DS_Store
+# Lượt KHÔNG được tính (không nộp). eval/run-1.csv, run-2.csv…, cost/simulate-N.csv, traces/run-N.jsonl PHẢI commit.
+eval/run-fake.csv
+eval/run-try.csv
+eval/run-mock.csv
+eval/run-error.csv
+eval/run-stopped.csv
+cost/simulate-try*
+cost/simulate-mock*
+cost/simulate-error*
+cost/simulate-stopped*
+traces/run-try.jsonl
+traces/run-mock.jsonl
+traces/run-error.jsonl
+traces/run-stopped.jsonl
+traces/simulate-try.jsonl
+traces/simulate-mock.jsonl
+traces/simulate-error.jsonl
+traces/simulate-stopped.jsonl
+# Export khảo sát còn tên / email / SĐT: chỉ commit bản đã ẩn danh
+evidence/**/raw-*
+# Nguyên file data BTC cấp (data/preclass, data/training-ops… của repo đề): để ở đây, không commit
+data-btc
+data-btc/
