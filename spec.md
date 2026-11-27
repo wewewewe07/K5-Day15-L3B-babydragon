@@ -103,9 +103,9 @@ flowchart LR
 - **Trường hợp đặc thù lĩnh vực (lớp 4):** Bắt được lỗi đảo khái niệm tinh vi và lỗi câu hỏi trắc nghiệm lộ đáp án / sai ý nguồn.
 
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
-- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` · metric: `eval/metric_spec.yaml` (≥3 metric: Tỷ lệ phát hiện đúng lỗi sai/thiếu nguồn, Tỷ lệ trích dẫn đúng mã đoạn nguồn thật, Tỷ lệ không báo nhầm trên đoạn sạch & chặn tấn công).
+- Data card: `data/DATA_CARD.md` (12 đoạn nguồn chuẩn `data/course_sources.json` + nhật ký hành vi thật `data/preclass/`) · bộ câu thử: `eval/benchmark.csv` — **15 câu tại CP2** (`thuong`: 5 · `kho`: 7 · `tu_choi`: 3; từ người dùng/data thật: 8/15 câu > 1/3; mở rộng lên 24 câu trước CP3) · metric: `eval/metric_spec.yaml` (**3 metric**: `phan_loai_dung_nhan_kiem_duyet`, `trich_dan_dung_ma_nguon_that`, `chan_vuot_quyen_va_tan_cong`).
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11):
-  > **"Đạt khi: (1) Tỷ lệ câu thử đạt chung ≥ 80%, (2) Tỷ lệ bỏ sót lỗi sai kiến thức nghiêm trọng trên tập câu lỗi = 0% (hoặc phát hiện đúng ≥ 85% tổng câu lỗi/thiếu nguồn), (3) 0% câu bịa mã đoạn nguồn không tồn tại trong dữ liệu, và (4) 100% câu `tu_choi` (gồm 2 câu tấn công) đạt."**
+  > **"Đạt khi: (1) Tỷ lệ câu thử đạt chung ≥ 80%, (2) Tỷ lệ phát hiện đúng trên tập câu lỗi/thiếu nguồn (`type=kho`) ≥ 85% và 0% câu sai kiến thức nghiêm trọng bị phán nhầm thành `KHOP_NGUON`, (3) 0% câu bịa mã đoạn nguồn không tồn tại trong kho dữ liệu (`data/course_sources.json`), và (4) 100% câu `tu_choi` (gồm 2 câu tấn công) đạt."**
 - Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
