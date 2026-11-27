@@ -6,9 +6,18 @@
 
 ## 1. Đầu vào
 
-- **Persona** (`cost/personas.yaml`): ≥3 kiểu — tỉ lệ, số phiên / người / tháng, số lượt hỏi / phiên. Nguồn: __
-- **Số người dùng thật** 3 kịch bản: thấp __ · cơ sở __ · cao __. Nguồn: __
-- **Giá** ≥2 mức model (từ `further-reading/model-prices.md` của repo đề, có link + ngày xem): __ · __
+- **Persona** (`cost/personas.yaml`): 3 kiểu người duyệt kịch bản bài giảng. 1 phiên = duyệt 1 kịch bản, 1 lượt = 1 đoạn ~6–8 câu.
+
+  | Persona | Tỉ lệ | Kịch bản / người / tháng | Lượt / phiên |
+  |---|---|---|---|
+  | `giang_vien_soan_bai_moi` | 0.5 | 4 | 6 |
+  | `doi_san_xuat_duyet_dinh_ky` | 0.3 | 3 | 4 |
+  | `phu_trach_soat_bai_cu` | 0.2 | 2 | 2 |
+
+  Nguồn: "soạn 1 bài / tuần (nhiều lượt)" và "soát bài cũ (ít lượt)" lấy từ đề track A mục A3 (`tracks/track-a-edtech.md` của repo đề). Kịch bản 30–50 câu lấy từ `spec.md` §1. Các số còn lại *(tự ước tính)*, sẽ cập nhật sau phỏng vấn.
+- **Số người dùng thật** 3 kịch bản: thấp 10 · cơ sở 12 · cao 15 người duyệt. Nguồn: `spec.md` §2 (~10–15 người đội sản xuất & giảng viên) *(tự ước tính)*. Kiểm chéo: cơ sở ra ~40 kịch bản / tháng, khớp 30–45 kịch bản / tháng ở §2.
+- **Giá** ≥2 mức model (từ `further-reading/model-prices.md` của repo đề, BTC xem 25/11/2026, link https://platform.claude.com/docs/en/about-claude/pricing): Claude Haiku 5.5 (Nhỏ) 0.10 / 0.50 USD mỗi 1M token vào / ra · Claude Sonnet 5.5 (Lớn) 2.00 / 10.00
+- **Giới hạn:** mỗi lượt mô phỏng lấy đầu vào từ `eval/benchmark.csv`, nên token / lượt của persona "soát bài cũ" (thực tế token rất lớn) có thể bị tính thấp.
 - **Tỉ lệ đạt** dùng để tính: __/__ (__%) — lượt `run-__` (lượt 2)
 - Đo token trên model __, tính giá model __ và __
 
