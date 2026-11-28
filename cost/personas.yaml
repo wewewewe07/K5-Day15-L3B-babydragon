@@ -3,49 +3,49 @@
 # Mọi số phải có nguồn (data / phỏng vấn / khảo sát / quy mô khoá có nguồn) hoặc ghi rõ "(tự ước tính)".
 # Chạy: python run.py simulate --try   (10 phiên, kiểm khung — làm trước CP3)
 #       python run.py simulate         (đủ số phiên dưới đây — bản nộp CP4)
-# Thay mọi dòng "(ví dụ)" bằng số và nguồn của nhóm; simulate nhắc nếu còn sót.
+#
+# Người dùng A3 là người DUYỆT nội dung bài giảng (giảng viên / đội sản xuất / TA, coach), không phải học viên.
+# 1 phiên = duyệt 1 bài (kịch bản / bộ câu hỏi / tài liệu). 1 lượt = 1 câu khẳng định đưa vào answer()
+# (agent.py kiểm từng câu: 1 lượt = 1 lần gọi model).
 
 sessions: 50        # số phiên mô phỏng — bản nộp ≥50
 seed: 42            # giữ cố định để chạy lại ra cùng chuỗi phiên
 
-users:              # số người dùng thật nếu đưa vào dùng — 3 kịch bản, ở quy mô thật của sản phẩm
-                    # track A: khoá học · track B–F: người dùng của sản phẩm / nhóm nhắm tới, nguồn công khai có link
-  low: 300
-  base: 700
-  high: 1000
-  source: "(ví dụ) track A — thay bằng số của nhóm. Cơ sở: lớp L3 hơn 700 học viên (README hackathon); thấp, cao: (tự ước tính)"
+users:              # số người duyệt nội dung bài giảng nếu đưa vào dùng — 3 kịch bản
+  low: 10
+  base: 12
+  high: 15
+  source: "spec.md §2: ~10–15 người đội sản xuất, giảng viên & TA/Coach (tự ước tính); cơ sở 12 lấy giữa khoảng (tự ước tính)"
 
 personas:           # ≥3 kiểu người dùng; share cộng lại = 1
-  - name: dung_it
-    share: 0.5              # tỉ lệ người dùng kiểu này
-    uses_per_month: 4       # số phiên / người / tháng
-    turns_per_session: 1    # số lượt hỏi trong một phiên
-    source: "(ví dụ) phỏng vấn P1, P3 — thay bằng nguồn của nhóm"
-  - name: dung_vua
-    share: 0.3
-    uses_per_month: 10
-    turns_per_session: 3
-    source: "(ví dụ) khảo sát n = 24, câu 3"
-  - name: dung_nhieu
-    share: 0.2
-    uses_per_month: 20
-    turns_per_session: 5
-    source: "(ví dụ) data/preclass: đếm số lượt / người — cách đếm ở evidence/data-mining.md"
+  - name: giang_vien_doi_san_xuat
+    share: 0.34
+    uses_per_month: 3       # P1: 3 bộ bài giảng / tài liệu lớn trong 1 tháng qua
+    turns_per_session: 35   # bản nháp 30–40 câu / ý (câu 3 phỏng vấn P1–P3, spec.md §1)
+    source: "uses: phỏng vấn P1 (evidence/interviews/P1.md); turns: bản nháp 30–40 câu/ý (P1–P3 câu 3); share: mẫu phỏng vấn 1/1/1 (tự ước tính)"
+  - name: ta_coach_ra_vua
+    share: 0.33
+    uses_per_month: 10      # P2: 10 bài / bộ câu hỏi / tài liệu trong 1 tháng qua
+    turns_per_session: 35
+    source: "uses: phỏng vấn P2 (evidence/interviews/P2.md); turns: bản nháp 30–40 câu/ý (P1–P3 câu 3); share: mẫu phỏng vấn 1/1/1 (tự ước tính)"
+  - name: ta_coach_ra_nhieu
+    share: 0.33
+    uses_per_month: 15      # P3: 15 bài / bộ câu hỏi trong 1 tháng qua
+    turns_per_session: 35
+    source: "uses: phỏng vấn P3 (evidence/interviews/P3.md); turns: bản nháp 30–40 câu/ý (P1–P3 câu 3); share: mẫu phỏng vấn 1/1/1 (tự ước tính)"
 # Mỗi lượt hỏi lấy ngẫu nhiên một đầu vào trong eval/benchmark.csv (type thuong và kho).
-# Persona hỏi kiểu riêng: thêm vào persona đó
-#     types: [thuong, kho, tu_choi]
-# hoặc
-#     inputs: ["câu hỏi kiểu 1", "câu hỏi kiểu 2"]
 
 prices:             # USD / 1 triệu token — chép từ further-reading/model-prices.md của repo đề. ≥2 mức model
+  # Token đo trên google/gemini-2.5-flash (OpenRouter) — model nhóm dùng ở lượt eval 1.
+  # Bảng giá BTC ghi gemini-2.5-flash đã ngừng, "không dùng" trong bảng chi phí → tính giá theo 2 model còn bán dưới đây.
   - model: gemini-3.1-flash-lite
     input: 0.25
     output: 1.50
-    source: "(ví dụ) https://ai.google.dev/gemini-api/docs/pricing · xem 25/11/2026"
+    source: "gemini-3.1-flash-lite (tầng Nhỏ) · https://ai.google.dev/gemini-api/docs/pricing · BTC xem 25/11/2026 (further-reading/model-prices.md)"
   - model: gemini-4-hydrogen
     input: 1.50
     output: 7.50
-    source: "(ví dụ) https://ai.google.dev/gemini-api/docs/pricing · xem 25/11/2026"
+    source: "gemini-4-hydrogen (tầng Lớn) · https://ai.google.dev/gemini-api/docs/pricing · BTC xem 25/11/2026 (further-reading/model-prices.md)"
 
 usd_to_vnd:         # tuỳ chọn: điền thì bản tóm tắt in thêm tiền Việt
   rate:
