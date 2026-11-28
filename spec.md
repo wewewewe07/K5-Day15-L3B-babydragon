@@ -82,7 +82,7 @@ flowchart LR
   | **G11 — Giải thích vì sao & trỏ đúng căn cứ** | Mỗi phán quyết (`KHOP_NGUON` hay `SAI_MAU_THUAN`) đều hiển thị kèm mã đoạn nguồn `[SRC-...]` và trích nguyên văn câu trong nguồn để giảng viên đối chiếu ngay trong 3 giây. |
   | **G8 / G9 — Dễ bỏ qua và hỗ trợ chỉnh sửa nhanh** | Với mỗi câu bị đánh dấu lỗi, AI chỉ gợi ý câu sửa (`suggested_fix`) bên cạnh câu gốc; giảng viên có quyền giữ nguyên câu gốc nếu đó là ví dụ mở rộng có chủ đích. |
 
-- **Phần nào còn giả:** Từ CP3, quyết định trung tâm (bước 4) gọi **model thật `google/gemini-2.5-flash`** qua OpenRouter (API tương thích OpenAI, `codebase/ai.py`, `MODEL_PROVIDER=openrouter`). Còn giả / rút gọn: (1) kho nguồn là 12 đoạn trích do nhóm biên tập (`data/course_sources.json`), chưa phải toàn bộ tài liệu khoá; (2) `submit_for_review` chỉ trả về vé `PENDING_LECTURER_REVIEW`, chưa nối hàng đợi / LMS thật; (3) bước 1 tách câu: mỗi lần chạy nhận một câu khẳng định / câu hỏi.
+- **Phần nào còn giả:** Quyết định trung tâm (bước 4) gọi **model thật** qua OpenRouter (API tương thích OpenAI, `codebase/ai.py`, `MODEL_PROVIDER=openrouter`): lượt 1–2 dùng `google/gemini-2.5-flash`; từ lượt 3 model chính là **`google/gemini-3.1-flash-lite`** (có trong bảng giá BTC), lượt 4 đối chứng `google/gemini-4-hydrogen`. Bước 1 tách câu (`split_claims`) làm bằng code từ bot v2. Còn giả / rút gọn: (1) kho nguồn là 12 đoạn trích do nhóm biên tập (`data/course_sources.json`), chưa phải toàn bộ tài liệu khoá; (2) `submit_for_review` chỉ trả về vé `PENDING_LECTURER_REVIEW`, chưa nối hàng đợi / LMS thật; (3) giao diện là dòng lệnh `python run.py`.
 
 ## §5. Chỗ khó — 4 lớp + ≥6 kịch bản + 2 tấn công *(guide 2.3)*
 
@@ -110,14 +110,14 @@ flowchart LR
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11):
   > **"Đạt khi: (1) Tỷ lệ câu thử đạt chung ≥ 80%, (2) Tỷ lệ phát hiện đúng trên tập câu lỗi/thiếu nguồn (`type=kho`) ≥ 85% và 0% câu sai kiến thức nghiêm trọng (các câu thử có `expected` = `SAI_MAU_THUAN`: B06, B07, B08, B09, B15) bị phán nhầm thành `KHOP_NGUON`, (3) 0% câu bịa mã đoạn nguồn không tồn tại trong kho dữ liệu (`data/course_sources.json`), và (4) 100% câu `tu_choi` (gồm 2 câu tấn công) đạt."**
   - *Ghi chú (CP3, không sửa chuẩn):* các câu `SAI_MAU_THUAN` thêm sau CP2 (`B22`, `B23`) vẫn được theo dõi riêng trong `eval/report.md` (lượt 1: cả 2 câu không bị phán `KHOP_NGUON`), nhưng câu chuẩn ở trên giữ nguyên chữ đã chốt tại CP2.
-- Kết quả: lượt 1 **24/24 (100%)** (`thuong` 9/9 · `kho` 11/11 · `tu_choi` 4/4; 0 câu bịa mã nguồn; 0 câu sai nghiêm trọng bị phán `KHOP_NGUON`) · lượt 2 __/__ (__%) — run ID: `run-1@20261127-230956` (model `google/gemini-2.5-flash`) / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 **24/24 (100%)** (`thuong` 9/9 · `kho` 11/11 · `tu_choi` 4/4; 0 câu bịa mã nguồn; 0 câu sai nghiêm trọng bị phán `KHOP_NGUON`) · lượt 2 **24/24 (100%)** (bot v2, cùng model) — run ID: `run-1@20261127-230956` / `run-2@20261128-122801` (`google/gemini-2.5-flash`) · chọn model trên bot v2: `run-3@20261128-123600` (`google/gemini-3.1-flash-lite`) 24/24 · `run-4@20261128-123632` (`google/gemini-4-hydrogen`) 24/24 · bộ chịu tải `tests/stress_cases.csv`: bot v1 21/26 → bot v2 26/26 (cùng model), 27/27 trên cả 2 model mới → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 - *Lưu ý khi đọc số lượt 1:* bộ câu thử do chính nhóm viết trên kho 12 đoạn nguồn, mỗi câu chỉ có 1 khẳng định và nhiều câu bám sát câu chữ của nguồn → 100% chưa chứng minh chạy tốt trên kịch bản dài thật. Lượt 2 nên thêm câu khó hơn (2 nguồn mâu thuẫn, kịch bản nhiều câu, diễn đạt lại xa nguồn) — chỉ thêm câu, không sửa câu cũ.
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
-- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
-- Chi phí / task thành công: __ (model __) · __ (model __)
-- Chi phí / tháng ở quy mô thật (toàn khoá sản xuất & rà soát bài giảng cho 15 ngày học): thấp __ · cơ sở __ · cao __ → chi tiết `cost/cost-estimate.md`
-- So với impact / người / tháng (§2): đáng làm không, vì sao: __
+- Persona + giá: `cost/personas.yaml` (3 kiểu người duyệt 3 · 10 · 15 bài / tháng theo P1–P3; 1 bài ≈ 35 câu = 5 lượt × 7 câu) · lượt mô phỏng: `cost/simulate-1.csv` (50 phiên, `gemini-3.1-flash-lite`) · `cost/simulate-2.csv` (`gemini-4-hydrogen`, đo trên chính nó nhưng chỉ 4/50 phiên hợp lệ — 46 phiên lỗi HTTP 402 hết credit OpenRouter; số hydrogen (†) chỉ để so mức).
+- Chi phí / task thành công (1 bài duyệt): **$0.0065** (model `gemini-3.1-flash-lite`, tỉ lệ đạt `run-3` 24/24) · **$0.127†** (model `gemini-4-hydrogen`, tỉ lệ đạt `run-4` 24/24).
+- Chi phí / tháng ở quy mô thật (10 · 12 · 15 người duyệt, *tự ước tính* từ §2), model chính `gemini-3.1-flash-lite`: thấp **$0.60** · cơ sở **$0.72** · cao **$0.90** (hydrogen: $11.92† · $14.31† · $17.88†) → chi tiết `cost/cost-estimate.md`
+- So với impact / người / tháng (§2): **$0.06 / người / tháng** so với **~131 phút** dò nguồn thủ công / người / tháng *(1.575 phút ÷ 12 người, tự ước tính)* → **đáng làm**: tiền model không đáng kể; điều quyết định là bot có rút ngắn thời gian duyệt mà không lọt lỗi khi dùng với giảng viên thật (chưa đo). Chọn `gemini-3.1-flash-lite`: đạt bằng `gemini-4-hydrogen` trên cả 2 bộ câu thử, rẻ hơn khoảng 20 lần.
 
 ## §9. Rủi ro & an toàn
 - **Dữ liệu:** Không commit nguyên văn tài liệu bản quyền của khoá học lên repo công khai; bộ nguồn trong `data/` chỉ gồm các đoạn trích ngắn đã gán mã đoạn phục vụ kiểm thử và dữ liệu hành vi `data/preclass/` đã ẩn danh.
@@ -139,6 +139,11 @@ flowchart LR
 | 27/11 22:45 | `codebase/ai.py`: timeout 60 → 180 giây + thử lại 1 lần khi hết giờ / lỗi 429, 5xx | Lượt thử đầu, câu `B01` bị `TimeoutError` sau 60 giây |
 | 27/11 23:00 | Đổi model từ Gemini API trực tiếp sang `google/gemini-2.5-flash` qua OpenRouter | Key Gemini API hết quota (HTTP 429) giữa lúc chạy lượt 1 |
 | 27/11 23:10 | §7: trả câu chuẩn "đạt" về đúng chữ đã chốt tại CP2 (bỏ `B22`, `B23` khỏi danh sách trong câu chuẩn), thêm ghi chú theo dõi riêng | Luật: không sửa chuẩn "đạt" sau CP2 |
+| 28/11 12:20 | Bot v2 (`codebase/agent.py`, `codebase/tools.py`): tách câu bằng code (giữ khối quiz), tra nguồn từng câu, model gắn nhãn từng câu + code lấy nhãn nặng nhất, khoá `TU_CHOI` bằng code khi có injection / vượt quyền / đòi dữ liệu nhạy cảm (kèm động từ đòi hỏi), từ khoá đồng nghĩa + tiếng Anh cho 12 đoạn nguồn, prompt định nghĩa rõ `LOI_CAU_HOI` và mã giả | Bộ chịu tải `tests/stress_cases.csv` trên bot v1: 21/26 — S12 (bỏ sót số liệu bịa trong kịch bản 2 câu), S22, S17, S18, S03 (`eval/report.md` §2) |
+| 28/11 12:28 | Lượt 2 `run-2` (cùng model, cùng 24 câu): 24/24 | Đo lại sau cải tiến |
+| 28/11 12:35 | Đổi model chính sang `google/gemini-3.1-flash-lite`, chạy đối chứng `google/gemini-4-hydrogen` (`run-3`, `run-4`) | `gemini-2.5-flash` đã ngừng, BTC không cho dùng trong bảng chi phí; cần tỉ lệ đạt đúng model được tính giá |
+| 28/11 12:45 | `cost/personas.yaml`: 1 lượt = 1 đoạn 7 câu, 5 lượt / phiên (= 35 câu / bài), đầu vào 10 đoạn ghép từ benchmark (seed 2026) | Bot v2 kiểm cả đoạn trong 1 lần gọi model; 35 lượt câu lẻ / phiên không sát cách dùng thật |
+| 28/11 13:05 | `codebase/ai.py`: đặt `max_tokens` = 4096 cho lời gọi OpenRouter | Mô phỏng `simulate-2` (hydrogen) lỗi 46/50 phiên HTTP 402: OpenRouter giữ trước 65.536 token / lời gọi khi không đặt `max_tokens`, tài khoản còn ít credit; giữ nguyên file lỗi, số hydrogen chỉ lấy 4 phiên hợp lệ |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)**
 

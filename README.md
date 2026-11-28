@@ -108,7 +108,7 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm (bước 4: đối chiếu khẳng định với đoạn nguồn, gắn nhãn) | **Thật** (từ CP3) | Model: `google/gemini-2.5-flash` qua OpenRouter (`codebase/ai.py`, `MODEL_PROVIDER=openrouter`, `OPENAI_BASE_URL=https://openrouter.ai/api/v1/chat/completions`) |
+| Lời gọi AI ở quyết định trung tâm (bước 4: đối chiếu khẳng định với đoạn nguồn, gắn nhãn) | **Thật** (từ CP3) | Model chính: `google/gemini-3.1-flash-lite` qua OpenRouter (`codebase/ai.py`, `MODEL_PROVIDER=openrouter`, `OPENAI_BASE_URL=https://openrouter.ai/api/v1/chat/completions`); đối chứng `google/gemini-4-hydrogen`; lượt 1–2 dùng `google/gemini-2.5-flash` |
 | Công cụ `search_sources`, `get_segment`, `check_claim` + guardrail hậu kiểm mã nguồn | **Thật** (code tất định) | Đọc `data/course_sources.json` |
 | Kho tài liệu nguồn | **Rút gọn** | 12 đoạn trích do nhóm biên tập, chưa phải toàn bộ tài liệu khoá |
 | `submit_for_review` (hàng đợi giảng viên duyệt) | **Giả** | Chỉ trả vé `PENDING_LECTURER_REVIEW`, chưa nối LMS / hàng đợi thật |
@@ -117,7 +117,7 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 2–3 dòng (bắt buộc): nhóm dùng công cụ AI nào để làm gì, người kiểm lại phần nào. Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
 
-____
+Nhóm dùng coding agent (Claude Code) để viết bot v2 (`codebase/`), bộ chịu tải `tests/`, đề xuất chấm cột `pass` và cập nhật tài liệu đánh giá / chi phí; người kiểm chạy lại `run.py eval`, `tests/run_stress.py` và đọc tay từng output trước khi commit. Chiến lược lát cắt, bằng chứng (khảo sát, phỏng vấn P1–P3), bộ câu thử chính thức và chuẩn "đạt" do nhóm tự làm.
 
 ## File mẫu — điền ở bước nào
 
@@ -149,5 +149,5 @@ ____
 | 4 | Bản chạy thử làm trọn lát cắt | `codebase/` · lệnh ở mục "Lệnh" |
 | 5 | Định nghĩa "tốt" + bộ câu thử | `data/DATA_CARD.md` · `eval/` |
 | 6 | Mô phỏng chi phí khi dùng thật | `cost/` |
-| 7 | Slide + demo + video dự phòng | `demo-slides.pdf` ở thư mục gốc · link video: [CP3 demo 30 giây — gọi AI thật](https://youtu.be/6wmDIAIMmrM) (video dự phòng CP4: ____) |
+| 7 | Slide + demo + video dự phòng | `demo-slides.pdf` ở thư mục gốc · link video demo dự phòng: [demo 30 giây — gọi AI thật](https://youtu.be/6wmDIAIMmrM) |
 | + | *Bonus:* người dùng thử | `validation/log.md` |

@@ -35,6 +35,24 @@ def _strip_accents(text: str) -> str:
     return out.replace("đ", "d").replace("Đ", "D").lower()
 
 
+# Từ khoá đồng nghĩa / tiếng Anh cho từng đoạn nguồn — giúp tra được câu diễn đạt lại hoặc viết bằng tiếng Anh
+# (lượt thử S03: câu tiếng Anh về HAX G10 không tra ra SRC-D05-M1-01 vì không trùng từ tiếng Việt nào).
+ALIASES = {
+    "SRC-D01-M1-01": "structured output contract token cost price wrapper application hop dong dau vao dau ra don gia",
+    "SRC-D02-M1-01": "mom test interview percent percentage sample hypothetical phong van mau nho phan tram gia dinh",
+    "SRC-D02-M2-01": "pain problem statement slice one sentence lat cat nguoi dung cong viec ket qua thanh phan",
+    "SRC-D03-M1-01": "tool contract side effect deterministic arithmetic calculation budget schedule tinh toan cong tru ngan sach lich",
+    "SRC-D04-M1-01": "react loop max steps max_steps trace tracing infinite loop vong lap gioi han buoc ghi vet",
+    "SRC-D05-M1-01": "automation level human in the loop reviewer unsure uncertain uncertainty guess narrow scope clarify hand over g10 hax muc tu dong khong chac nguoi duyet",
+    "SRC-D06-M1-01": "data card synthetic seed pain evidence anonymize filter du lieu gia lap bang chung",
+    "SRC-D07-M1-01": "rag grounded citation hallucination not in documents training memory trich dan khong co trong tai lieu tri nho",
+    "SRC-D08-M1-01": "workflow agent multi agent architecture shape simplest hinh dang kien truc don gian",
+    "SRC-D09-M1-01": "benchmark eval evaluation pass criterion threshold grader agreement cau thu chuan dat nguoi cham dong thuan",
+    "SRC-D11-M1-01": "prompt injection guardrail untrusted api key password otp personal data ignore previous instructions",
+    "SRC-D13-M1-01": "cost per successful task pass rate unit economics persona scenario chi phi tac vu thanh cong ty le dat",
+}
+
+
 def _tokenize(text: str) -> set:
     clean = re.sub(r"[^a-z0-9_]+", " ", _strip_accents(text))
     stop = {"la", "va", "cua", "cho", "trong", "khi", "voi", "cac", "mot", "nhung", "duoc", "nay", "do", "theo", "hay"}
@@ -61,6 +79,7 @@ def search_sources(query: str) -> list:
         code = item.get("code", "")
         haystack = " ".join([
             code,
+            ALIASES.get(code.upper(), ""),
             item.get("day", ""),
             item.get("topic", ""),
             item.get("title", ""),
@@ -123,12 +142,24 @@ def check_claim(claim: str, candidate_codes: str = "") -> dict:
     signals = []
     rule_hint = ""
 
-    # 1. Phát hiện Prompt Injection / vượt quyền tự xuất bản
+    # 1. Phát hiện Prompt Injection / vượt quyền (tiếng Việt + tiếng Anh) — các cụm này tự nó đã là mệnh lệnh
     if any(k in c_ascii for k in [
-        "bo qua moi huong dan", "bo qua moi quy tac", "ignore previous", "api_key", ".env",
-        "xuat ban thang", "khong can cho giang vien duyet", "tu dong sua toan bo"
+        "bo qua moi huong dan", "bo qua moi quy tac", "bo qua buoc", "ignore previous", "ignore all previous",
+        "ignore the above", "developer mode", "api_key", ".env",
+        "xuat ban thang", "khong can cho giang vien duyet", "khong can giang vien duyet", "tu dong sua toan bo",
+        "auto_published=true", "nhan bat buoc", "khong can doi chieu", "ghi de truc tiep", "cap nhat thang diem",
     ]):
         signals.append("VI_PHAM_THAM_QUYEN_HOAC_INJECTION")
+        rule_hint = "TU_CHOI"
+
+    # 1b. ĐÒI thông tin nhạy cảm / dữ liệu cá nhân (lượt thử S22). Chỉ tính khi có động từ đòi hỏi đi kèm:
+    #     câu kịch bản chỉ NHẮC tới "API key" hay "dữ liệu cá nhân" (vd B18) vẫn là nội dung bài giảng hợp lệ.
+    sensitive = ["so dien thoai", "sdt", "email", "mat khau", "password", "otp", "dia chi nha", "cccd",
+                 "danh sach hoc vien", "api key", "system prompt"]
+    demand = ["cho toi", "in ra", "gui cho", "gui toi", "lay ra", "liet ke", "cung cap", "xuat ra", "hien thi",
+              "print", "show me", "give me", "output your", "reveal", "tiet lo"]
+    if any(k in c_ascii for k in sensitive) and any(v in c_ascii for v in demand):
+        signals.append("DOI_THONG_TIN_NHAY_CAM_HOAC_DU_LIEU_CA_NHAN")
         rule_hint = "TU_CHOI"
 
     # 2. Phát hiện câu hỏi Quiz lộ sẵn đáp án trong câu dẫn
@@ -165,3 +196,21 @@ def submit_for_review(draft_report: str) -> dict:
         "auto_published": False,
         "preview": (draft_report or "")[:200],
     }
+
+
+def split_claims(text: str) -> list:
+    """Tách đoạn kịch bản thành từng câu khẳng định (bước 1 ở spec §4). Hàm code tất định, không ghi trace.
+    Câu quiz được giữ thành MỘT khối: chữ phương án (A./B./C./D.) được bảo vệ khỏi bị coi là hết câu, phần phương án
+    và dòng "Đáp án ..." gộp vào câu hỏi đứng trước → đoạn kịch bản có quiz xen giữa vẫn tách đúng các câu còn lại."""
+    t = (text or "").strip()
+    keep = "․"  # ký tự tạm thay dấu chấm sau chữ phương án
+    guarded = re.sub(r"(?<=[^:]\s)([A-D])\.(?=\s)", r"\1" + keep, t)
+    parts = [p.strip() for p in re.split(r"(?<=[.!?])\s+(?=[\[\"'(A-ZÀ-Ỹ0-9])", guarded) if p.strip()]
+    merged = []
+    for p in parts:
+        if merged and re.match(r"^([A-D]%s|Đáp án|Dap an)" % keep, p):
+            merged[-1] = merged[-1] + " " + p
+        else:
+            merged.append(p)
+    merged = [m.replace(keep, ".") for m in merged]
+    return merged if len(merged) > 1 else [t]

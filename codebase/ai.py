@@ -41,6 +41,9 @@ MODEL_PROVIDER = (os.environ.get("MODEL_PROVIDER") or "fake").strip().lower()
 MODEL_NAME = (os.environ.get("MODEL_NAME") or "").strip()
 API_KEY = (os.environ.get("API_KEY") or "").strip()
 OPENAI_BASE_URL = (os.environ.get("OPENAI_BASE_URL") or "https://api.openai.com/v1/chat/completions").strip()
+# Giới hạn token ra mỗi lời gọi: OpenRouter giữ trước credit theo max_tokens (mặc định 65.536 → HTTP 402 khi tài khoản còn ít).
+# Output thật của bot ~150–3.000 token (kể cả token suy nghĩ của model lớn).
+MAX_TOKENS = int(os.environ.get("MAX_TOKENS") or 4096)
 
 
 def post_json(url, headers, body, timeout=180, retries=1):
@@ -72,7 +75,8 @@ def post_json(url, headers, body, timeout=180, retries=1):
 def call_openai(system, user):
     messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
     data = post_json(OPENAI_BASE_URL, {"Authorization": "Bearer " + API_KEY},
-                     {"model": MODEL_NAME, "messages": messages, "temperature": 0.1})
+                     {"model": MODEL_NAME, "messages": messages, "temperature": 0.1,
+                      "max_tokens": MAX_TOKENS})
     u = data.get("usage", {})
     return {
         "text": data["choices"][0]["message"]["content"],

@@ -171,12 +171,14 @@
       <table>
         <thead><tr><th>Lượt</th><th class="num">Đạt</th><th class="num">kho</th><th class="num">tu_choi</th><th>Chuẩn</th></tr></thead>
         <tbody>
-          <tr><td>1 · <span class="mono">run-1@20261127-230956</span></td><td class="num">24/24</td><td class="num">11/11</td><td class="num">4/4</td><td><span class="tag ok">đạt</span></td></tr>
-          <tr class="cho-so"><td>2 · <span class="mono">run-__</span></td><td class="num">__/__</td><td class="num">__/__</td><td class="num">__/__</td><td>__</td></tr>
+          <tr><td>1 · <span class="mono">run-1</span> · bot v1</td><td class="num">24/24</td><td class="num">11/11</td><td class="num">4/4</td><td><span class="tag ok">đạt</span></td></tr>
+          <tr><td>2 · <span class="mono">run-2</span> · bot v2</td><td class="num">24/24</td><td class="num">11/11</td><td class="num">4/4</td><td><span class="tag ok">đạt</span></td></tr>
+          <tr><td>3 · <span class="mono">run-3</span> · flash-lite</td><td class="num">24/24</td><td class="num">11/11</td><td class="num">4/4</td><td><span class="tag ok">đạt</span></td></tr>
+          <tr><td>4 · <span class="mono">run-4</span> · hydrogen</td><td class="num">24/24</td><td class="num">11/11</td><td class="num">4/4</td><td><span class="tag ok">đạt</span></td></tr>
+          <tr><td><b>Bộ chịu tải</b> (27 câu khó)</td><td class="num" colspan="3">v1 <b>21/26</b> → v2 <b>26/26</b> · 27/27 · 27/27</td><td><span class="tag ok">+5</span></td></tr>
         </tbody>
       </table>
-      <p class="cho-so-note" style="margin:10px 0 0">Chờ số lượt 2 (eval/report.md)</p>
-      <p class="src" style="margin:6px 0 0">Lỗi chính lượt 1: bộ câu thử còn dễ (mỗi câu 1 khẳng định); B14 model chép mã giả, guardrail chặn.</p>
+      <p class="src" style="margin:8px 0 0">Lỗi đau nhất lượt 1 (bộ chịu tải): kịch bản 2 câu, số liệu bịa "Gartner 87%" ở câu 2 lọt qua → bot v2 tách câu, kiểm từng câu, code lấy nhãn nặng nhất. Lượt 1–2: gemini-2.5-flash · lượt 3–4: 2 model trong bảng giá BTC.</p>
     </div>
   </div>
   <div class="foot"><span>Nguồn: eval/README.md · eval/report.md</span><span>babydragon · A3</span></div>
@@ -191,21 +193,21 @@
       <h2>Đầu vào</h2>
       <ul>
         <li>3 kiểu người duyệt: 3 · 10 · 15 bài / tháng (P1–P3)</li>
-        <li>1 bài ≈ 35 câu = 35 lần gọi model</li>
+        <li>1 bài ≈ 35 câu = 5 lần gọi model (bot v2 kiểm 7 câu / lần)</li>
         <li>Quy mô: 10 · 12 · 15 người duyệt <i>(tự ước tính)</i></li>
         <li>Giá: gemini-3.1-flash-lite 0.25 / 1.50 · gemini-4-hydrogen 1.50 / 7.50 USD mỗi 1M token (BTC xem 25/11/2026)</li>
       </ul>
     </div>
-    <div class="card cho-so" style="padding:12px 16px">
+    <div class="card" style="padding:12px 16px">
       <table>
         <thead><tr><th>Model</th><th class="num">/ bài đạt</th><th class="num">/ tháng thấp</th><th class="num">cơ sở</th><th class="num">cao</th></tr></thead>
         <tbody>
-          <tr><td>gemini-3.1-flash-lite</td><td class="num">__</td><td class="num">__</td><td class="num">__</td><td class="num">__</td></tr>
-          <tr><td>gemini-4-hydrogen</td><td class="num">__</td><td class="num">__</td><td class="num">__</td><td class="num">__</td></tr>
+          <tr><td><b>gemini-3.1-flash-lite</b> (chọn)</td><td class="num"><b>$0.0065</b></td><td class="num">$0.60</td><td class="num"><b>$0.72</b></td><td class="num">$0.90</td></tr>
+          <tr><td>gemini-4-hydrogen</td><td class="num">$0.127†</td><td class="num">$11.92†</td><td class="num">$14.31†</td><td class="num">$17.88†</td></tr>
         </tbody>
       </table>
-      <p class="cho-so-note" style="margin:10px 0 0">Chờ <span class="mono">python run.py simulate</span> (50 phiên) + tỉ lệ đạt lượt 2</p>
-      <p style="margin:8px 0 0">So với impact: __ USD / người / tháng so với __ phút công duyệt tiết kiệm / người / tháng</p>
+      <p class="src" style="margin:8px 0 0">50 phiên chạy thật qua bot · † hydrogen: 4/50 phiên hợp lệ (hết credit), token ra gấp ~6 lần · tỉ lệ đạt lượt cùng model 24/24 · bot chạy 14 giây / bài 35 câu</p>
+      <p style="margin:8px 0 0">So với impact: <b>$0.06</b> / người / tháng so với <b>~131 phút</b> dò nguồn thủ công / người / tháng <i>(chia đều, tự ước tính)</i> → tiền model không phải rào cản.</p>
     </div>
   </div>
   <div class="foot"><span>Nguồn: cost/personas.yaml · cost/cost-estimate.md</span><span>babydragon · A3</span></div>
@@ -214,12 +216,13 @@
 <!-- 7 · Kết luận -->
 <section class="slide">
   <div class="kicker">7 · Kết luận</div>
-  <h1 class="cho-so" style="padding:6px 10px; border-radius:8px">Go / Iterate / Stop: __</h1>
+  <h1>Go / Iterate / Stop: <span style="color:#b4532a">Iterate → pilot</span></h1>
   <div class="grid g3" style="flex:0 0 auto">
     <div class="card"><h2>Pain có thật</h2><p style="margin:0">3/3 người dạy dò tay 15–60 phút / bài; 12/21 học viên gặp câu thiếu ngữ cảnh (trang 1)</p></div>
-    <div class="card"><h2>Chất lượng</h2><p style="margin:0">Lượt 1: 24/24 đạt chuẩn. <span class="cho-so-note">Lượt 2: __ (trang 5)</span></p></div>
-    <div class="card"><h2>Chi phí</h2><p style="margin:0"><span class="cho-so-note">__ USD / bài duyệt thành công (trang 6)</span></p></div>
+    <div class="card"><h2>Chất lượng</h2><p style="margin:0">Lượt 1 → 2: 24/24 → 24/24; bộ chịu tải 21/26 → 26/26. Nhưng bộ câu do nhóm tự viết — chưa có kịch bản thật giữ riêng.</p></div>
+    <div class="card"><h2>Chi phí</h2><p style="margin:0"><b>$0.0065</b> / bài duyệt thành công (gemini-3.1-flash-lite) · $0.72 / tháng cả đội 12 người (trang 6)</p></div>
   </div>
+  <p style="margin:22px 0 0; font-size:15.5pt"><b>Vì sao Iterate, chưa Go:</b> chất lượng đạt chuẩn và chi phí không đáng kể, nhưng mọi số mới đo trên câu nhóm tự viết. Bước tiếp: <b>pilot 1 bài sắp xuất bản với 2–3 giảng viên</b>, đo phút duyệt trước / sau và số lỗi còn lọt — đạt thì Go.</p>
   <div class="foot"><span>Dẫn số từ trang 1, 5, 6</span><span>babydragon · A3</span></div>
 </section>
 
@@ -228,7 +231,7 @@
   <div class="kicker">8 · Nếu có thêm 1 tuần</div>
   <h1>Làm bộ câu thử khó hơn, gần kịch bản thật hơn</h1>
   <ul style="font-size:16pt">
-    <li><b>Kịch bản nhiều câu thật</b> (30–40 câu / bài) thay vì 1 câu / lượt: lượt 1 đạt 24/24 vì bộ câu còn dễ</li>
+    <li><b>Bộ giữ riêng từ kịch bản thật</b> (30–40 câu / bài, giảng viên chấm mù): bot v2 đã kiểm được cả đoạn nhưng mới thử trên câu nhóm tự viết</li>
     <li><b>Ca 2 nguồn mâu thuẫn / tài liệu lỗi thời</b> (spec §5 kịch bản 4): chưa có câu thử</li>
     <li><b>Cho giảng viên thật dùng thử</b> trên 1 bài sắp xuất bản, đo phút duyệt trước / sau</li>
   </ul>

@@ -55,8 +55,15 @@
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
 | 1 | `run-1@20261127-230956` | `google/gemini-2.5-flash` (OpenRouter) | Workflow 5 bước bản đầu: `search_sources` → `get_segment` → `check_claim` → `call_model` → guardrail hậu kiểm mã nguồn + `submit_for_review` | 24/24 | 100% | Đạt cả 4 điều kiện §7 (chung 100% ≥ 80% · `kho` 11/11 ≥ 85% và 0 câu sai nghiêm trọng bị phán `KHOP_NGUON` · 0 câu bịa mã nguồn · `tu_choi` 4/4) |
-| 2 | *(Chạy trước CP4 14:30)* | | Cải tiến sau khi phân tích lỗi Lượt 1 | __/__ | | |
+| 2 | `run-2@20261128-122801` | `google/gemini-2.5-flash` (OpenRouter) | **Bot v2** (một lần cải tiến, nhắm nhóm lỗi "bỏ sót lỗi trong kịch bản nhiều câu"): tách câu bằng code, tra nguồn từng câu, model gắn nhãn từng câu, code lấy nhãn nặng nhất; khoá `TU_CHOI` bằng code; từ khoá đồng nghĩa / tiếng Anh cho nguồn | 24/24 | 100% | Đạt cả 4 điều kiện §7 |
+| 3 | `run-3@20261128-123600` | `google/gemini-3.1-flash-lite` (OpenRouter, giá = bảng BTC) | Bot v2 — thử model rẻ (guide 4.1 bước 4) | 24/24 | 100% | Đạt cả 4 điều kiện §7 |
+| 4 | `run-4@20261128-123632` | `google/gemini-4-hydrogen` (OpenRouter, giá = bảng BTC) | Bot v2 — thử model mạnh | 24/24 | 100% | Đạt cả 4 điều kiện §7 |
+
+**Bộ chịu tải** `tests/stress_cases.csv` (27 câu khó hơn: diễn đạt lại, tiếng Anh, kịch bản nhiều câu, quiz, mã giả, injection, dữ liệu cá nhân; chấm tự động bằng `python tests/run_stress.py`): bot v1 **21/26** → bot v2 **26/26** (`gemini-2.5-flash`) · **27/27** (`gemini-3.1-flash-lite`) · **27/27** (`gemini-4-hydrogen`).
+
+**Chọn model:** hai model đạt như nhau trên cả hai bộ; `gemini-3.1-flash-lite` sinh ít token ra hơn khoảng 6 lần (`run-3` 127 so với `run-4` 816 token / câu), chi phí mỗi bài rẻ hơn khoảng 20 lần ($0.0065 so với $0.127), trả lời nhanh hơn khoảng 3 lần → chọn **`gemini-3.1-flash-lite`** làm model chính (chi phí: `cost/cost-estimate.md`).
 
 ## 6. Lỗi chính *(Cập nhật ở CP4 từ `eval/report.md`)*
 
-*(Điền sau khi chạy Lượt 1 và Lượt 2).*
+- Bộ chính thức không còn câu trượt từ lượt 1 → lỗi chính lấy từ bộ chịu tải (bot v1): **bỏ sót lỗi trong kịch bản nhiều câu** (S12 — số liệu bịa ở câu 2 lọt qua) · **không từ chối đòi dữ liệu cá nhân** (S22) · **báo nhầm trên nội dung đúng** (S17 quiz tốt, S18 mã giả trên nội dung đúng) · **tra nguồn hụt với câu tiếng Anh** (S03). Chi tiết input / output / vì sao sai và cải tiến: `eval/report.md`.
+- Giới hạn: 100% trên bộ tự viết chưa chứng minh bot tốt trên kịch bản thật; chưa có held-out, chưa có người chấm thứ hai cho lượt 2–4.
