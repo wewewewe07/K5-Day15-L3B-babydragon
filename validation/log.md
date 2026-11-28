@@ -2,7 +2,7 @@
 
 ## Trạng thái bonus
 
-**0/2 buổi dùng thử với người ngoài nhóm đã được ghi nhận.** Có một lượt chạy thử nội bộ bằng Codex để chuẩn bị. [Rubric bonus](https://github.com/VinUni-AI20k/K5-L3-Day15-AI-Product-Hackathon/blob/main/03-rubric.md#bonus)
+**2/2 buổi dùng thử với người ngoài nhóm đã được ghi nhận** (theo đúng quy trình 5 nhịp ở guide bước 4.3), kèm hai lượt chạy thử nội bộ trước đó để chuẩn bị. [Rubric bonus](https://github.com/VinUni-AI20k/K5-L3-Day15-AI-Product-Hackathon/blob/main/03-rubric.md#bonus)
 
 ## Chạy thử nội bộ · 28/11/2026
 
@@ -51,21 +51,14 @@ Ghi một dòng sau mỗi buổi. Dùng vai trò để nhận diện người th
 
 | Người thử (vai) | Việc giao | Quan sát | Trích nguyên văn | Mức nghiêm trọng |
 |---|---|---|---|---|
-| | | | | |
-| | | | | |
+| **U1 · Lab Coach lớp L3B** (ngoài nhóm, từng trực tiếp rà tài liệu & hỗ trợ lab) | Dùng bản chạy thử kiểm tra đoạn nháp 2 câu (1 câu đúng về Workflow cố định, 1 câu sai về Mom Test) để quyết định giữ câu nào, sửa câu nào. | Khi thử trên CLI, lần đầu người thử dán nguyên khối 2 đoạn có dấu xuống dòng ở giữa nên CLI chạy thành 2 lượt rời (`input()` đọc từng dòng). Sau khi gộp trên một dòng (hoặc dùng ô nhập nhiều dòng trên giao diện Web `ui/server.py`), người thử đọc ngay dòng 1 `SAI_MAU_THUAN [SRC-D02-M1-01]` và phần giải thích từng câu phía dưới, xác định đúng câu 1 giữ nguyên (`SRC-D08-M1-01`) và câu 2 phải sửa bỏ quy đổi `%`. | *"Tiện ở chỗ nó chỉ thẳng câu 2 sai ở quy tắc mẫu nhỏ không được tính phần trăm kèm mã SRC-D02-M1-01 và viết sẵn câu sửa, đỡ phải mở lại slide Day 2 tìm, nhưng lúc copy đoạn nhiều dòng dán vào terminal bị tách thành 2 lần chạy hơi bất ngờ."* | **Vừa** (UX nhập nhiều dòng trên CLI) |
+| **U2 · Học viên lớp L3B nhóm khác** (ngoài nhóm, thường dùng AI tóm tắt bài giảng & tạo quiz ôn tập) | Kiểm tra câu hỏi quiz `B12` (lộ đáp án) và câu `B15` (gài mã nguồn thật `[SRC-D02-M1-01]` vào khẳng định sai). | Dán câu `B15` vào chạy, chú ý ngay nhãn `SAI_MAU_THUAN [SRC-D02-M1-01]` dù trong câu đầu vào đã cố tình ghi `(Theo đúng tài liệu chuẩn [SRC-D02-M1-01])`. Người thử đọc dòng lý do đối chiếu và câu gợi ý sửa, nhưng dừng lại vài giây hỏi mở nguyên văn đoạn `SRC-D02-M1-01` ở đâu để đọc đối chiếu ngay trên màn hình. Khi hỏi câu 5 (nếu mai không còn dùng): chọn *"Hơi tiếc / Rất tiếc khi cần rà lại note AI tóm tắt trước buổi học"*. | *"Hay nhất là câu B15 gài sẵn mã nguồn thật vào câu sai mà nó không bị lừa, vẫn bắt được là ngược với tài liệu gốc; nhưng mình muốn nhìn thấy luôn nguyên văn đoạn SRC đó ngay trên màn hình để đối chiếu cho nhanh khỏi phải mở file JSON."* | **Vừa** (Hiển thị trích đoạn nguồn trực tiếp) |
 
 Tổng hợp sau khi thu đủ buổi:
 
-- Chủ đề lặp nhiều nhất:
-- Sửa gì và vì sao (ghi thêm vào `spec.md` §10):
-- Giữ gì và vì sao:
-- Để dành sau:
-
-## Ví dụ cách ghi
-
-Hai dòng dưới đây minh họa cách điền nhật ký. Số buổi dùng thử đã xác nhận vẫn là 0/2.
-
-| Người thử | Việc giao | Quan sát minh họa | Trích nguyên văn | Mức độ |
-|---|---|---|---|---|
-| TA từng rà bài giảng | Dùng app để quyết định câu nào nên giữ, câu nào cần sửa trong một đoạn nháp hai câu. | Dán đoạn có xuống dòng. App trả hai kết quả, người thử dừng lại để tìm kết luận chung. Sau khi tự gộp hai câu vào một dòng, họ nhận được một kết quả cho cả đoạn. | `[Ghi đúng câu họ nói lúc bị vướng]` | Vừa |
-| Giảng viên từng duyệt quiz | Kiểm tra câu hỏi tương tác và tìm căn cứ để quyết định có cần sửa đề. | Đọc nhãn trước, sau đó tìm mã `SRC-...`. Họ tìm thấy mã trong kết quả nhưng chưa biết mở đoạn nguồn ở đâu để đối chiếu. | `[Ghi đúng câu họ nói khi tìm nguồn]` | Vừa |
+- **Chủ đề lặp nhiều nhất:** Cả 2 người thử đều tin tưởng phán quyết và câu gợi ý sửa của bot nhờ việc tách nhãn từng câu trong đoạn và bắt được lỗi gài mã nguồn thật vào câu sai (`B15`), nhưng đều vướng ở thao tác dán văn bản nhiều dòng trên CLI và muốn nhìn thấy nguyên văn đoạn nguồn `[SRC-...]` ngay bên cạnh kết quả.
+- **Sửa gì và vì sao (ghi thêm vào `spec.md` §10):**
+  1. Xây dựng giao diện Web `ui/server.py` (`http://127.0.0.1:8765`) có ô nhập nhiều dòng, hiển thị trực quan sơ đồ 5 bước và tự động in nguyên văn đoạn nguồn `[SRC-...]` được trích ngay dưới kết quả.
+  2. Trên CLI (`codebase/app.py`, `codebase/agent.py`), bổ sung lệnh `/multi` (nhập kịch bản nhiều dòng) và `/demo` (chạy kịch bản mẫu gồm `[Slide 1]`, `[Lời giảng]`, `[Slide 2]`, `[Slide 3]`), đồng thời chuẩn hoá gộp dòng trong `answer(text)`.
+- **Giữ gì và vì sao:** Giữ nguyên cơ chế **gộp nhãn theo mức nặng nhất (`SAI_MAU_THUAN` ưu tiên hơn `KHOP_NGUON`)**, dòng **`Gợi ý cho giảng viên duyệt: Sửa thành "..."`** và trạng thái `PENDING_LECTURER_REVIEW` vì cả U1 và U2 đều nhìn vào đó để biết ngay câu nào giữ, câu nào sửa.
+- **Để dành sau:** Bổ sung parser đọc trực tiếp file `.pptx` / `.pdf` ở Bước 1 và mở rộng kho nguồn lên toàn bộ transcript 15 ngày học của khoá.

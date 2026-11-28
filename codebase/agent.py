@@ -98,7 +98,8 @@ def _force_refusal(output_text: str, signals: list) -> str:
 
 
 def answer(text: str) -> dict:
-    # Bước 1: tách câu
+    # Bước 1: tách câu (chuẩn hoá các dòng xuống hàng để Web UI hoặc chế độ /multi dán nhiều dòng vẫn tách đúng câu)
+    text = " ".join(ln.strip() for ln in (text or "").splitlines() if ln.strip())
     claims = split_claims(text)
 
     # Bước 2: tra nguồn theo từng câu (+ cả đoạn), gộp không trùng, tối đa MAX_SEGMENTS đoạn
