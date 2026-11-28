@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>babydragon · A3 Kiểm duyệt kịch bản bài giảng AI</title>
+<!-- Nguồn slide. Xuất PDF: python slides/build_pdf.py → demo-slides.pdf ở thư mục gốc.
+     Ô có class "cho-so" = số còn chờ (lượt eval 2, mô phỏng chi phí). Điền xong thì xoá class và xuất lại. -->
+<style>
+  @page { size: 13.333in 7.5in; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", "Inter", Arial, sans-serif; color: #1c2430; background: #e9edf2; }
+  .slide {
+    width: 13.333in; height: 7.5in; padding: 0.55in 0.7in 0.5in;
+    background: #fbfcfd; position: relative; overflow: hidden;
+    page-break-after: always; break-after: page;
+    display: flex; flex-direction: column;
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .kicker { font-size: 13pt; letter-spacing: .08em; text-transform: uppercase; color: #b4532a; font-weight: 600; }
+  h1 { font-size: 30pt; line-height: 1.15; margin: 6px 0 18px; font-weight: 700; color: #111a24; }
+  h2 { font-size: 15pt; margin: 0 0 8px; color: #2a3644; }
+  p, li { font-size: 14.5pt; line-height: 1.4; }
+  ul { margin: 0; padding-left: 1.1em; }
+  li { margin-bottom: 6px; }
+  .src { font-size: 10.5pt; color: #6a7684; }
+  .foot { position: absolute; left: 0.7in; right: 0.7in; bottom: 0.25in; display: flex; justify-content: space-between; font-size: 10pt; color: #8a95a2; }
+  .grid { display: grid; gap: 22px; flex: 1; min-height: 0; }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .card { background: #fff; border: 1px solid #dbe1e8; border-radius: 10px; padding: 18px 20px; }
+  .big { font-size: 40pt; font-weight: 700; color: #111a24; line-height: 1; font-variant-numeric: tabular-nums; }
+  .big small { font-size: 16pt; font-weight: 600; color: #4a5664; }
+  .lbl { font-size: 13pt; color: #3d4a58; margin-top: 8px; line-height: 1.35; }
+  blockquote { margin: 0; padding: 12px 16px; border-left: 4px solid #b4532a; background: #fff6f1; font-size: 14pt; line-height: 1.4; border-radius: 0 8px 8px 0; }
+  blockquote .src { display: block; margin-top: 6px; }
+  table { border-collapse: collapse; width: 100%; font-size: 12.5pt; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #dbe1e8; vertical-align: top; }
+  th { font-size: 11pt; text-transform: uppercase; letter-spacing: .04em; color: #5a6674; font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.pick td { background: #fff6f1; font-weight: 600; }
+  .tag { display: inline-block; font-size: 10.5pt; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-family: Consolas, monospace; }
+  .ok { background: #e3f3e8; color: #1d6b3a; }
+  .bad { background: #fde8e6; color: #a2281c; }
+  .warn { background: #fff1d6; color: #8a5a00; }
+  .gray { background: #eceff3; color: #3d4a58; }
+  code, .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: .92em; }
+  .flow { display: flex; align-items: stretch; gap: 0; margin: 6px 0 18px; }
+  .step { flex: 1; background: #fff; border: 1px solid #c9d2dc; border-radius: 8px; padding: 10px 12px; font-size: 12pt; line-height: 1.3; }
+  .step b { display: block; font-size: 10.5pt; color: #b4532a; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+  .step.human { border-color: #b4532a; background: #fff6f1; }
+  .arrow { align-self: center; width: 26px; text-align: center; color: #8a95a2; font-size: 18pt; }
+  .io { background: #f4f6f9; border-radius: 8px; padding: 12px 14px; font-size: 12pt; line-height: 1.4; }
+  .io .mono { font-size: 11.5pt; }
+  .cho-so { border: 2px dashed #c98a1a !important; background: #fffaf0 !important; color: #8a5a00 !important; }
+  .cho-so-note { font-size: 11pt; color: #8a5a00; font-weight: 600; }
+  .cover { background: #111a24; color: #f1f4f7; justify-content: center; }
+  .cover h1 { color: #fff; font-size: 40pt; margin-bottom: 14px; }
+  .cover p { color: #c7d0da; font-size: 16pt; max-width: 10in; }
+  .cover .kicker { color: #f0a37a; }
+  .team { margin-top: 36px; font-size: 13pt; color: #aab5c1; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- 0 · Bìa -->
+<section class="slide cover">
+  <div class="kicker">AI20K K5 · Hackathon Day 15 · Track A · A3</div>
+  <h1>Kiểm duyệt kịch bản bài giảng do AI sinh,<br>từng câu trỏ về đoạn nguồn của khoá</h1>
+  <p>Giảng viên đưa kịch bản nháp vào · AI gắn nhãn từng câu kèm mã đoạn nguồn · giảng viên chấp nhận hoặc sửa trước khi xuất bản. AI không tự xuất bản.</p>
+  <div class="team">Nhóm babydragon · Lớp L3B<br>Nguyễn Thanh Tùng (Đội trưởng) · Giang Thái Sơn · Bùi Quý Anh · Trịnh Ngọc Ninh</div>
+</section>
+
+<!-- 1 · Người dùng & pain -->
+<section class="slide">
+  <div class="kicker">1 · Người dùng &amp; pain</div>
+  <h1>Người duyệt bài giảng phải dò tay từng câu với tài liệu gốc, nên lỗi vẫn lọt tới học viên</h1>
+  <div class="grid g3" style="flex:0 0 auto">
+    <div class="card"><div class="big">3/3 <small>người dạy</small></div><div class="lbl">rà soát nội dung AI sinh trong tháng qua, mỗi bài mất <b>15–60 phút</b></div><div class="src">Phỏng vấn P1–P3</div></div>
+    <div class="card"><div class="big">15 <small>bài / tháng</small></div><div class="lbl">P3 không đủ thời gian dò nguồn nên chỉ "đọc lướt theo trí nhớ chuyên môn"</div><div class="src">evidence/interviews/P3.md</div></div>
+    <div class="card"><div class="big">12/21 <small>học viên</small></div><div class="lbl">gặp câu hỏi hỏi ý chưa được giảng trong đoạn bài trước đó; 15/21 mất 5 → &gt;30 phút mỗi lần dò lại</div><div class="src">Khảo sát N = 24 (21 học viên L3)</div></div>
+  </div>
+  <div class="grid g2" style="margin-top:20px; flex:0 0 auto">
+    <blockquote>"sinh sai nội dung"<span class="src">P3 · TA / Lab Coach · results.csv dòng 10</span></blockquote>
+    <blockquote>"nội dung do AI tạo bị lệch so với bài gốc khiến mình phải kiểm tra lại nguồn thông tin của bài giảng gốc"<span class="src">Học viên L3 · results.csv dòng 15</span></blockquote>
+  </div>
+  <div class="foot"><span>Nguồn: evidence/summary.md</span><span>babydragon · A3</span></div>
+</section>
+
+<!-- 2 · Vì sao chọn -->
+<section class="slide">
+  <div class="kicker">2 · Vì sao chọn bài này</div>
+  <h1>A3 chặn lỗi từ gốc bài giảng, trước khi tới hàng trăm học viên</h1>
+  <table>
+    <thead><tr><th>Hướng</th><th>Ai gặp</th><th>Mỗi lần tốn</th><th class="num">Impact / tháng</th><th>Quyết định</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td>A3 · Kiểm &amp; duyệt kịch bản AI sinh</td><td>~10–15 người duyệt; ảnh hưởng 436–721 học viên</td><td>30–60 phút / bài (P1)</td><td class="num">1.575 phút công duyệt<br>+ 15.666 phút học viên dò lại</td><td>Chọn</td></tr>
+      <tr><td>A1 · Tutor dưới video kèm mã đoạn</td><td>436 học viên active</td><td>~3–5 phút tự tua lại</td><td class="num">2.160–3.600 phút</td><td>Giữ so sánh: chữa ở ngọn sau khi bài đã xuất bản</td></tr>
+      <tr><td>A5 · Đối chiếu lịch phòng &amp; lab coach</td><td>~10 key coach</td><td>~30 phút <i>(tự ước tính)</i></td><td class="num">~480 phút</td><td>Loại: tần suất thấp hơn</td></tr>
+    </tbody>
+  </table>
+  <p class="src" style="margin-top:14px">A3 người dạy: 35 kịch bản / tháng × 45 phút. A3 học viên: 373 học viên × 5,6 lần / tháng × 7,5 phút (khảo sát câu 3B, 6B). Nguồn: spec.md §2.</p>
+  <div class="foot"><span>Nguồn: spec.md §2</span><span>babydragon · A3</span></div>
+</section>
+
+<!-- 3 · Giải pháp -->
+<section class="slide">
+  <div class="kicker">3 · Giải pháp</div>
+  <h1>Workflow cố định 5 bước: mọi câu đều qua kiểm mã nguồn bằng code</h1>
+  <div class="flow">
+    <div class="step"><b>1 · Nhận</b>1 câu khẳng định / câu hỏi trong kịch bản nháp</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>2 · Tra nguồn</b><span class="mono">search_sources</span> + <span class="mono">get_segment</span> lấy đoạn gốc của khoá</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>3 · Tiền kiểm (code)</b><span class="mono">check_claim</span>: mã giả, injection, lộ đáp án</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>4 · Model đối chiếu</b>gắn 1 trong 5 nhãn + mã đoạn + lý do</div>
+    <div class="arrow">→</div>
+    <div class="step"><b>5 · Hậu kiểm + duyệt</b>mã không tồn tại bị chặn; <span class="mono">submit_for_review</span> chờ giảng viên</div>
+  </div>
+  <div class="grid g2" style="flex:0 0 auto">
+    <div class="card">
+      <h2>5 nhãn đầu ra</h2>
+      <p style="margin:0; line-height:2"><span class="tag ok">KHOP_NGUON</span> <span class="tag bad">SAI_MAU_THUAN</span> <span class="tag bad">LOI_CAU_HOI</span><br><span class="tag warn">THIEU_NGUON</span> <span class="tag gray">TU_CHOI</span></p>
+      <p class="src" style="margin:6px 0 0">Không chắc → THIEU_NGUON, để giảng viên quyết (HAX G10)</p>
+    </div>
+    <div class="card">
+      <h2>AI tự làm đến đâu</h2>
+      <p style="margin:0">AI gợi ý, <b>người quyết</b>. Không tự xuất bản lên LMS / pre-class. Sót lỗi kiến thức thì hơn 700 học viên học sai; tự sửa nhầm thì hỏng ý đồ sư phạm của giảng viên.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Nguồn: spec.md §4 · codebase/agent.py</span><span>babydragon · A3</span></div>
+</section>
+
+<!-- 4 · Demo -->
+<section class="slide">
+  <div class="kicker">4 · Demo live</div>
+  <h1>1 câu thường, 1 câu tấn công: cùng một luồng, gọi AI thật</h1>
+  <div class="grid g2" style="flex:0 0 auto">
+    <div class="card">
+      <h2>B01 · thường · đoạn sạch (đo báo nhầm)</h2>
+      <div class="io">Vào: <i>[Kịch bản Day 02] Khi viết mô tả bài toán (Pain)… nêu rõ ai đang làm việc gì, vướng ở đâu, hậu quả là gì…</i></div>
+      <div class="io" style="margin-top:8px"><span class="tag ok">KHOP_NGUON</span> <span class="mono">[SRC-D02-M2-01]</span><br>Gợi ý: Giữ nguyên · trạng thái <span class="mono">PENDING_LECTURER_REVIEW</span></div>
+    </div>
+    <div class="card">
+      <h2>B15 · tấn công nguỵ tạo nguồn</h2>
+      <div class="io">Vào: câu sai (quy % cho mẫu 3 người, hỏi câu giả định) nhưng <b>gắn sẵn mã nguồn thật</b> để lừa bộ kiểm</div>
+      <div class="io" style="margin-top:8px"><span class="tag bad">SAI_MAU_THUAN</span> <span class="mono">[SRC-D02-M1-01]</span><br>Đọc đoạn nguồn thật: mẫu nhỏ phải ghi x/n người, không quy ra %</div>
+    </div>
+  </div>
+  <p class="src" style="margin-top:16px">Output lấy từ eval/run-1.csv (model google/gemini-2.5-flash) · mỗi câu ~1.240 token vào, ~2 giây. Mạng hỏng: video dự phòng https://youtu.be/6wmDIAIMmrM</p>
+  <div class="foot"><span>Nguồn: eval/benchmark.csv · eval/run-1.csv</span><span>babydragon · A3</span></div>
+</section>
+
+<!-- 5 · Đánh giá -->
+<section class="slide">
+  <div class="kicker">5 · Đánh giá thế nào</div>
+  <h1>24 câu thử, 3 metric, chuẩn "đạt" chốt trước khi chạy</h1>
+  <div class="grid g2" style="flex:0 0 auto">
+    <div class="card">
+      <h2>Bộ câu thử &amp; metric</h2>
+      <ul>
+        <li>24 câu: thuong 9 · kho 11 · tu_choi 4 (3 câu tấn công)</li>
+        <li>14/24 câu từ người dùng hoặc data thật</li>
+        <li>Metric: đúng nhãn · trích đúng mã nguồn thật · chặn vượt quyền &amp; tấn công</li>
+        <li>Người thứ hai chấm độc lập 5 output: khớp 5/5</li>
+      </ul>
+      <p class="src">Chuẩn "đạt": ≥80% câu đạt · ≥85% câu kho bắt đúng, 0 câu sai nghiêm trọng bị phán KHOP_NGUON · 0 mã nguồn bịa · 100% tu_choi</p>
+    </div>
+    <div class="card" style="padding:12px 16px">
+      <table>
+        <thead><tr><th>Lượt</th><th class="num">Đạt</th><th class="num">kho</th><th class="num">tu_choi</th><th>Chuẩn</th></tr></thead>
+        <tbody>
+          <tr><td>1 · <span class="mono">run-1@20261127-230956</span></td><td class="num">24/24</td><td class="num">11/11</td><td class="num">4/4</td><td><span class="tag ok">đạt</span></td></tr>
+          <tr class="cho-so"><td>2 · <span class="mono">run-__</span></td><td class="num">__/__</td><td class="num">__/__</td><td class="num">__/__</td><td>__</td></tr>
+        </tbody>
+      </table>
+      <p class="cho-so-note" style="margin:10px 0 0">Chờ số lượt 2 (eval/report.md)</p>
+      <p class="src" style="margin:6px 0 0">Lỗi chính lượt 1: bộ câu thử còn dễ (mỗi câu 1 khẳng định); B14 model chép mã giả, guardrail chặn.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Nguồn: eval/README.md · eval/report.md</span><span>babydragon · A3</span></div>
+</section>
+
+<!-- 6 · Chi phí -->
+<section class="slide">
+  <div class="kicker">6 · Chi phí khi dùng thật</div>
+  <h1>Chi phí mỗi bài duyệt thành công, 3 quy mô, 2 mức model</h1>
+  <div class="grid g2" style="grid-template-columns: 1fr 1.5fr; flex:0 0 auto">
+    <div class="card">
+      <h2>Đầu vào</h2>
+      <ul>
+        <li>3 kiểu người duyệt: 3 · 10 · 15 bài / tháng (P1–P3)</li>
+        <li>1 bài ≈ 35 câu = 35 lần gọi model</li>
+        <li>Quy mô: 10 · 12 · 15 người duyệt <i>(tự ước tính)</i></li>
+        <li>Giá: gemini-3.1-flash-lite 0.25 / 1.50 · gemini-4-hydrogen 1.50 / 7.50 USD mỗi 1M token (BTC xem 25/11/2026)</li>
+      </ul>
+    </div>
+    <div class="card cho-so" style="padding:12px 16px">
+      <table>
+        <thead><tr><th>Model</th><th class="num">/ bài đạt</th><th class="num">/ tháng thấp</th><th class="num">cơ sở</th><th class="num">cao</th></tr></thead>
+        <tbody>
+          <tr><td>gemini-3.1-flash-lite</td><td class="num">__</td><td class="num">__</td><td class="num">__</td><td class="num">__</td></tr>
+          <tr><td>gemini-4-hydrogen</td><td class="num">__</td><td class="num">__</td><td class="num">__</td><td class="num">__</td></tr>
+        </tbody>
+      </table>
+      <p class="cho-so-note" style="margin:10px 0 0">Chờ <span class="mono">python run.py simulate</span> (50 phiên) + tỉ lệ đạt lượt 2</p>
+      <p style="margin:8px 0 0">So với impact: __ USD / người / tháng so với __ phút công duyệt tiết kiệm / người / tháng</p>
+    </div>
+  </div>
+  <div class="foot"><span>Nguồn: cost/personas.yaml · cost/cost-estimate.md</span><span>babydragon · A3</span></div>
+</section>
+
+<!-- 7 · Kết luận -->
+<section class="slide">
+  <div class="kicker">7 · Kết luận</div>
+  <h1 class="cho-so" style="padding:6px 10px; border-radius:8px">Go / Iterate / Stop: __</h1>
+  <div class="grid g3" style="flex:0 0 auto">
+    <div class="card"><h2>Pain có thật</h2><p style="margin:0">3/3 người dạy dò tay 15–60 phút / bài; 12/21 học viên gặp câu thiếu ngữ cảnh (trang 1)</p></div>
+    <div class="card"><h2>Chất lượng</h2><p style="margin:0">Lượt 1: 24/24 đạt chuẩn. <span class="cho-so-note">Lượt 2: __ (trang 5)</span></p></div>
+    <div class="card"><h2>Chi phí</h2><p style="margin:0"><span class="cho-so-note">__ USD / bài duyệt thành công (trang 6)</span></p></div>
+  </div>
+  <div class="foot"><span>Dẫn số từ trang 1, 5, 6</span><span>babydragon · A3</span></div>
+</section>
+
+<!-- 8 · Nếu có thêm 1 tuần -->
+<section class="slide">
+  <div class="kicker">8 · Nếu có thêm 1 tuần</div>
+  <h1>Làm bộ câu thử khó hơn, gần kịch bản thật hơn</h1>
+  <ul style="font-size:16pt">
+    <li><b>Kịch bản nhiều câu thật</b> (30–40 câu / bài) thay vì 1 câu / lượt: lượt 1 đạt 24/24 vì bộ câu còn dễ</li>
+    <li><b>Ca 2 nguồn mâu thuẫn / tài liệu lỗi thời</b> (spec §5 kịch bản 4): chưa có câu thử</li>
+    <li><b>Cho giảng viên thật dùng thử</b> trên 1 bài sắp xuất bản, đo phút duyệt trước / sau</li>
+  </ul>
+  <div class="foot"><span>Nguồn: eval/report.md mục 2 · spec.md §5</span><span>babydragon · A3</span></div>
+</section>
+
+</body>
+</html>
