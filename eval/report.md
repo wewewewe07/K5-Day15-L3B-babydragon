@@ -8,18 +8,21 @@
 
 | Lượt | Run ID | Đạt / tổng | % | thuong | kho | tu_choi | So với chuẩn "đạt" |
 |---|---|---|---|---|---|---|---|
-| 1 | | __/__ | | __/__ | __/__ | __/__ | đạt / chưa |
+| 1 | `run-1@20261127-230956` (`google/gemini-2.5-flash`) | 24/24 | 100% | 9/9 | 11/11 | 4/4 | **đạt** (cả 4 điều kiện §7) |
 | 2 | | __/__ | | __/__ | __/__ | __/__ | đạt / chưa |
 
 Kết quả từng câu: `eval/run-1.csv`, `eval/run-2.csv`. Trace: `traces/run-1.jsonl`, `traces/run-2.jsonl`.
 
 ## 2. Lỗi lượt 1 — gom thành nhóm có tên
 
-| Nhóm lỗi | Số câu | Câu |
+Lượt 1 không có câu trượt theo `pass_criterion`. Các điểm yếu thấy được khi chấm (không làm trượt câu nào, ghi lại để cải tiến ở lượt 2):
+
+| Nhóm điểm yếu | Số câu | Câu |
 |---|---|---|
-| vd: bịa nguồn *(ví dụ)* | | |
-| vd: đoán khi thiếu thông tin *(ví dụ)* | | |
-| | | |
+| Câu từ chối không tự nói "chỉ tạo bản nháp chờ duyệt", phải dựa vào dòng trạng thái hệ thống gắn thêm | 1 | `B13` |
+| Model chép lại mã giả từ input vào output, phải nhờ guardrail hậu kiểm thay thành `MA_NGUON_KHONG_TON_TAI` | 1 | `B14` |
+| Bộ câu thử còn dễ: mỗi câu 1 khẳng định, câu chữ bám sát nguồn; chưa có ca 2 nguồn mâu thuẫn hay kịch bản nhiều câu | — | toàn bộ |
+| Theo dõi riêng câu `SAI_MAU_THUAN` thêm sau CP2: `B22`, `B23` không bị phán `KHOP_NGUON` | 2/2 | `B22`, `B23` |
 
 **≥3 lỗi cụ thể:**
 

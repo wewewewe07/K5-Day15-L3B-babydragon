@@ -1,0 +1,86 @@
+[
+  {
+    "code": "SRC-D01-M1-01",
+    "day": "Day01",
+    "topic": "Chatbot vs AI Application & Structured Output",
+    "title": "Ứng dụng AI quanh model và hợp đồng dữ liệu",
+    "text": "Một sản phẩm AI không phải là một chatbot nói chuyện tự do, mà là một ứng dụng phần mềm bọc quanh model. Mọi lệnh gọi model trong luồng sản phẩm cần có hợp đồng đầu vào - đầu ra rõ ràng (structured output), và chi phí được đo bằng tổng số token đầu vào cộng token đầu ra nhân với đơn giá của từng model."
+  },
+  {
+    "code": "SRC-D02-M1-01",
+    "day": "Day02",
+    "topic": "Jobs to be Done (JTBD) & Mom Test",
+    "title": "Quy tắc phỏng vấn người dùng Mom Test",
+    "text": "Khi phỏng vấn người dùng theo Mom Test: (1) hỏi về cuộc sống và công việc thực tế của họ chứ không giới thiệu ý tưởng sản phẩm AI của mình; (2) chỉ hỏi về những việc cụ thể đã xảy ra trong quá khứ gần (ví dụ lần gần nhất trong 1 tháng qua), tuyệt đối không hỏi câu giả định 'bạn có muốn dùng tính năng X không' vì người được hỏi thường khen xã giao; (3) với cỡ mẫu phỏng vấn nhỏ (n = 3 đến 5 người), phải ghi dạng x/n người, không được quy ra phần trăm (%)."
+  },
+  {
+    "code": "SRC-D02-M2-01",
+    "day": "Day02",
+    "topic": "AI Product Canvas & Lát cắt sản phẩm",
+    "title": "Định nghĩa lát cắt một câu và mô tả Pain",
+    "text": "Mô tả bài toán (Pain) phải nêu rõ ai đang làm việc gì, vướng ở đâu và hậu quả là gì, tuyệt đối không được chứa chữ AI (bỏ AI đi thì công việc và nỗi đau đó vẫn tồn tại). Một lát cắt sản phẩm phải viết gọn trong đúng một câu gồm 4 thành phần: một người dùng cụ thể, một công việc, một quyết định của AI và một kết quả kiểm chứng được."
+  },
+  {
+    "code": "SRC-D03-M1-01",
+    "day": "Day03",
+    "topic": "Tool Contract & Read/Write Separation",
+    "title": "Hợp đồng công cụ (Tool Contract) và phân tách quyền đọc/ghi",
+    "text": "Mỗi công cụ (tool) cung cấp cho AI phải có hợp đồng rõ ràng gồm: tên công cụ, tham số đầu vào (input), kết quả trả về (output) và nhãn tác động ra ngoài (side-effect). Các phép tính số học chính xác, kiểm tra giới hạn ngân sách hoặc đối chiếu trùng lịch bắt buộc phải thực hiện bằng hàm code tất định (deterministic code), không được để LLM tự cộng trừ nhẩm bằng ngôn ngữ."
+  },
+  {
+    "code": "SRC-D04-M1-01",
+    "day": "Day04",
+    "topic": "ReAct Pattern & Vòng lặp Agent",
+    "title": "Giới hạn bước lặp và ghi vết (Tracing) trong Agent",
+    "text": "Khi thiết kế vòng lặp Agent theo mẫu ReAct (Reasoning + Acting), hệ thống bắt buộc phải đặt giới hạn số bước tối đa (MAX_STEPS) để chống lặp vô hạn gây nổ chi phí token, đồng thời phải ghi vết (trace) toàn bộ số lần gọi model, số lần gọi công cụ, lượng token vào/ra và lý do dừng của từng phiên."
+  },
+  {
+    "code": "SRC-D05-M1-01",
+    "day": "Day05",
+    "topic": "Mức tự động (Autonomy Levels) & HAX Guidelines",
+    "title": "Ba mức tự động theo chi phí sai sót và nguyên tắc HAX G10",
+    "text": "Mức độ tự động của AI được chọn dựa trên câu hỏi 'nếu AI sai thì ai chịu hậu quả gì và chi phí sửa đắt hay rẻ': (1) AI gợi ý, người quyết định — dùng khi sai sót gây hậu quả đắt hoặc khó đảo ngược (như xuất bản bài giảng, hoàn tiền lớn, đổi vé máy bay); (2) AI tự làm khi chắc chắn, chuyển người khi không chắc; (3) AI tự làm hoàn toàn — chỉ dùng khi sai sót rất rẻ và người dùng dễ dàng tự sửa ngay. Theo nguyên tắc HAX G10, khi thiếu thông tin hoặc không chắc chắn, AI phải thu hẹp phạm vi, hỏi làm rõ hoặc trao quyền cho người duyệt chứ không được đoán bừa."
+  },
+  {
+    "code": "SRC-D06-M1-01",
+    "day": "Day06",
+    "topic": "Data Card & Dữ liệu giả lập có Seed",
+    "title": "Quản lý dữ liệu thử nghiệm và giới hạn của dữ liệu synthetic",
+    "text": "Mọi bộ dữ liệu dùng cho sản phẩm phải có Data Card ghi rõ nguồn gốc, các bước lọc/ẩn danh, số lượng dòng và giới hạn. Dữ liệu giả lập do nhóm tự dựng hoặc sinh bằng code (synthetic data có seed cố định) chỉ được dùng để chạy thử hệ thống và kiểm thử benchmark, tuyệt đối không được tính là bằng chứng chứng minh nỗi đau (pain evidence) của người dùng thật."
+  },
+  {
+    "code": "SRC-D07-M1-01",
+    "day": "Day07",
+    "topic": "Grounded Generation & Citation",
+    "title": "Trả lời có căn cứ và từ chối khi ngoài tài liệu nguồn",
+    "text": "Trong hệ thống hỏi đáp hoặc kiểm chứng dựa trên tài liệu (RAG / Grounded AI), mọi khẳng định đưa ra phải trỏ về đúng mã đoạn nguồn có trong kho dữ liệu. Nếu thông tin không nằm trong tài liệu nguồn, hệ thống bắt buộc phải trả lời rõ là 'không có trong tài liệu / thiếu nguồn căn cứ', tuyệt đối không tự suy diễn từ trí nhớ huấn luyện chung của model và không được bịa mã trích dẫn."
+  },
+  {
+    "code": "SRC-D08-M1-01",
+    "day": "Day08",
+    "topic": "Kiến trúc Workflow cố định vs Agent",
+    "title": "Quy tắc chọn hình dạng kiến trúc đơn giản nhất",
+    "text": "Luôn chọn hình dạng kiến trúc đơn giản nhất giải quyết trọn vẹn lát cắt: dùng Workflow cố định khi các bước xử lý đã biết trước và lặp lại ổn định (giúp chi phí rẻ hơn, độ trễ thấp và dễ đo kiểm); chỉ dùng 1 Agent khi thứ tự gọi công cụ phụ thuộc động vào đầu vào; và chỉ dùng Nhiều Agent (Multi-Agent) khi các vai (roles) thực sự có mục tiêu hoặc ngữ cảnh tách biệt hoàn toàn."
+  },
+  {
+    "code": "SRC-D09-M1-01",
+    "day": "Day09",
+    "topic": "Evaluation Benchmark & Metric Spec",
+    "title": "Thiết kế bộ câu thử và tiêu chí chấm kiểm chứng được",
+    "text": "Bộ câu thử (benchmark) phải phủ đủ các trường hợp thường, trường hợp khó (edge cases) và trường hợp phải từ chối (bao gồm câu tấn công). Tiêu chí đạt (pass_criterion) và metric_spec phải được định nghĩa tường minh để hai người chấm độc lập đạt độ đồng thuận tối thiểu 4/5 câu; chuẩn 'đạt' sau khi đã chốt trước lúc chạy đánh giá thì không được sửa lại cho khớp với kết quả đầu ra."
+  },
+  {
+    "code": "SRC-D11-M1-01",
+    "day": "Day11",
+    "topic": "AI Safety, Prompt Injection & Guardrails",
+    "title": "Phòng chống Prompt Injection và bảo vệ dữ liệu nhạy cảm",
+    "text": "Mọi văn bản do người dùng nhập vào, tin nhắn chat hoặc kịch bản bài giảng đưa vào kiểm duyệt đều phải được coi là dữ liệu thuần túy (untrusted data), không bao giờ là chỉ dẫn điều khiển hệ thống. Hệ thống phải có lớp chặn rủi ro (guardrail) để từ chối các lệnh yêu cầu bỏ qua quy tắc trước đó (prompt injection) và tuyệt đối không thu thập hay để lộ API key, mật khẩu, OTP hoặc thông tin cá nhân thật."
+  },
+  {
+    "code": "SRC-D13-M1-01",
+    "day": "Day13",
+    "topic": "Unit Economics & Cost per Successful Task",
+    "title": "Công thức tính chi phí trên mỗi tác vụ thành công",
+    "text": "Khi mô phỏng chi phí vận hành thực tế của sản phẩm AI, không được giả định tỷ lệ thành công là 100%. Chi phí trên mỗi tác vụ thành công (Cost per Successful Task) được tính bằng Chi phí trung bình của một phiên chạy chia cho Tỷ lệ đạt thực tế (pass rate) đo được trên bộ câu thử của cùng model đó, sau đó nhân với tần suất sử dụng của các nhóm persona ở 3 kịch bản Thấp, Cơ sở và Cao."
+  }
+]
