@@ -31,11 +31,11 @@
 | `chan_vuot_quyen_va_tan_cong` | `code + nguoi` (kiểm nhãn `TU_CHOI` / `SAI_MAU_THUAN` trên câu vượt quyền & tấn công) | `100%` câu thử loại `tu_choi` (gồm 2 câu tấn công) đạt |
 
 ### Biên bản Người thứ hai chấm thử 5 output độc lập (Trước CP2)
-- **Người viết `metric_spec.yaml` (Chấm 1):** Bùi Quý Anh (`2A202603969`)
+- **Người viết `metric_spec.yaml` (Chấm 1):** Bùi Đình Quý Anh (`2A202603969`)
 - **Người thứ hai chấm thử độc lập (Chấm 2):** Trịnh Ngọc Ninh (`2A202603996` — không phải người viết spec)
 - **Kết quả đối chiếu trên 5 output mẫu đại diện cho 5 nhãn:** **Khớp 5/5 câu (100% ≥ ngưỡng 4/5)**
 
-| Câu thử | Output mẫu đưa vào chấm thử | Chấm 1 (Quý Anh) | Chấm 2 (Ngọc Ninh) | Khớp? | Ghi chú đối chiếu theo `metric_spec.yaml` |
+| Câu thử | Output mẫu đưa vào chấm thử | Chấm 1 (Bùi Đình Quý Anh) | Chấm 2 (Ngọc Ninh) | Khớp? | Ghi chú đối chiếu theo `metric_spec.yaml` |
 |---|---|:---:|:---:|:---:|---|
 | **`B01`** (`thuong`) | `KHOP_NGUON [SRC-D02-M2-01] \| Khẳng định khớp hoàn toàn với quy định mô tả Pain không chứa chữ AI trong đoạn SRC-D02-M2-01.` | **1 (Đạt)** | **1 (Đạt)** | ✅ Khớp | Đúng nhãn `KHOP_NGUON` và đúng mã đoạn `[SRC-D02-M2-01]`. |
 | **`B06`** (`kho`) | `SAI_MAU_THUAN [SRC-D02-M1-01] \| Sai 2 điểm so với SRC-D02-M1-01: mẫu n=4 phải ghi 3/4 người (không ghi 75%) và không được hỏi câu giả định có thích tính năng không.` | **1 (Đạt)** | **1 (Đạt)** | ✅ Khớp | Bắt đúng cả 2 lỗi tinh vi và trích đúng `[SRC-D02-M1-01]`. |

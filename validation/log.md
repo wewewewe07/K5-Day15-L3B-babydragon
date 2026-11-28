@@ -20,7 +20,7 @@ Bản chạy thật lưu trong [eval/run-3.csv](../eval/run-3.csv) có B01 trả
 
 ## Chạy thử nội bộ bằng model thật · 28/11/2026 14:05
 
-Thành viên nhóm (Quý Anh) chạy `python run.py` trên bản `827f4a3`, model **`google/gemini-3.1-flash-lite`** (OpenRouter, key mới), với đúng đoạn nháp dự định giao cho người thử (2 câu dán trên một dòng). Đây vẫn là **kiểm nội bộ, không tính là buổi dùng thử với người ngoài nhóm**.
+Thành viên nhóm (Bùi Đình Quý Anh) chạy `python run.py` trên bản `827f4a3`, model **`google/gemini-3.1-flash-lite`** (OpenRouter, key mới), với đúng đoạn nháp dự định giao cho người thử (2 câu dán trên một dòng). Đây vẫn là **kiểm nội bộ, không tính là buổi dùng thử với người ngoài nhóm**.
 
 | Việc thử | Kết quả thật của app | Nhận xét |
 |---|---|---|

@@ -129,7 +129,7 @@ flowchart LR
 - **Phân công có tên:**
   - **Nguyễn Thanh Tùng (2A202603957 — Đội trưởng):** Thiết kế kiến trúc Workflow kiểm duyệt, prompt đối chiếu nguồn & luồng `codebase/agent.py`.
   - **Giang Thái Sơn (2A202603964):** Xây dựng công cụ `search_sources`, `get_segment`, `check_claim`, guardrail kiểm mã nguồn (`codebase/tools.py`) & `data/DATA_CARD.md`.
-  - **Bùi Quý Anh (2A202603969):** Đào dữ liệu `data/preclass/`, khảo sát & phỏng vấn người làm bài giảng/giảng viên (`evidence/`), xây dựng `eval/benchmark.csv` & `eval/metric_spec.yaml`.
+  - **Bùi Đình Quý Anh (2A202603969):** Đào dữ liệu `data/preclass/`, khảo sát & phỏng vấn người làm bài giảng/giảng viên (`evidence/`), xây dựng `eval/benchmark.csv` & `eval/metric_spec.yaml`.
   - **Trịnh Ngọc Ninh (2A202603996):** Mô phỏng chi phí 3 kịch bản (`cost/`), tổng hợp `eval/report.md` & thiết kế `demo-slides.pdf`.
 - **Dùng AI vào việc gì (2–3 dòng; chi tiết `docs/ai-usage.md`):** Dùng coding agent để khởi tạo khung tài liệu, viết script thống kê nhanh `data/preclass/` và kiểm tra định dạng repo; các quyết định về lát cắt A3, cấu trúc công cụ và tiêu chí đánh giá do nhóm thảo luận và tự kiểm chứng.
 
@@ -154,4 +154,4 @@ flowchart LR
 
 | Thời điểm | Đổi gì | Vì sao |
 |---|---|---|
-|  |  |  |
+| 28/11 14:43 | Ghi đúng họ tên thành viên: "Bùi Quý Anh" → "Bùi Đình Quý Anh" trong tài liệu + slide (`TEAMS.md` đã sửa ở `dccb7ad`) | Khớp họ tên trên hệ thống khoá; không đổi nội dung |
