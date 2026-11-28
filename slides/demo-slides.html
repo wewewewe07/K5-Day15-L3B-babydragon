@@ -108,7 +108,7 @@
   <div class="kicker">3 · Giải pháp</div>
   <h1>Workflow cố định 5 bước: mọi câu đều qua kiểm mã nguồn bằng code</h1>
   <div class="flow">
-    <div class="step"><b>1 · Nhận</b>1 câu khẳng định / câu hỏi trong kịch bản nháp</div>
+    <div class="step"><b>1 · Tách câu (code)</b><span class="mono">split_claims</span>: đoạn kịch bản → từng câu, giữ khối quiz</div>
     <div class="arrow">→</div>
     <div class="step"><b>2 · Tra nguồn</b><span class="mono">search_sources</span> + <span class="mono">get_segment</span> lấy đoạn gốc của khoá</div>
     <div class="arrow">→</div>
@@ -148,7 +148,7 @@
       <div class="io" style="margin-top:8px"><span class="tag bad">SAI_MAU_THUAN</span> <span class="mono">[SRC-D02-M1-01]</span><br>Đọc đoạn nguồn thật: mẫu nhỏ phải ghi x/n người, không quy ra %</div>
     </div>
   </div>
-  <p class="src" style="margin-top:16px">Output lấy từ eval/run-1.csv (model google/gemini-2.5-flash) · mỗi câu ~1.240 token vào, ~2 giây. Mạng hỏng: video dự phòng https://youtu.be/6wmDIAIMmrM</p>
+  <p class="src" style="margin-top:16px">Output khớp eval/run-3.csv (model google/gemini-3.1-flash-lite) · mỗi lượt ~1.400–1.700 token vào, ~2 giây. Demo trên giao diện <span class="mono">python ui/server.py</span>. Mạng hỏng: video dự phòng https://youtu.be/6wmDIAIMmrM</p>
   <div class="foot"><span>Nguồn: eval/benchmark.csv · eval/run-1.csv</span><span>babydragon · A3</span></div>
 </section>
 

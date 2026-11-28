@@ -155,3 +155,4 @@ flowchart LR
 | Thời điểm | Đổi gì | Vì sao |
 |---|---|---|
 | 28/11 14:43 | Ghi đúng họ tên thành viên: "Bùi Quý Anh" → "Bùi Đình Quý Anh" trong tài liệu + slide (`TEAMS.md` đã sửa ở `dccb7ad`) | Khớp họ tên trên hệ thống khoá; không đổi nội dung |
+| 28/11 14:56 | `ui/`: bảng "Luồng xử lý lượt này" dựng lại 5 bước từ trace (tách câu · tra nguồn · kiểm luật · 1 lời gọi model · hậu kiểm), in nguyên văn đoạn nguồn được trích, thanh demo theo slide 4 (`?demo=1..4`). Slide 3 bước 1 → "Tách câu (code)", slide 4 chú thích model `gemini-3.1-flash-lite` | Slide 3 còn ghi bước 1 "Nhận 1 câu" của bot v1; người thử nội bộ chưa biết mở đoạn nguồn để đối chiếu (`validation/log.md`) |
