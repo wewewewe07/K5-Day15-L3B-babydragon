@@ -53,13 +53,14 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 - **Sơ đồ kiến trúc (Mermaid):**
 ```mermaid
 flowchart LR
-    U["Giảng viên đưa kịch bản / câu hỏi AI sinh vào rà soát"] --> S1["Bước 1 (Code Parser): Tách kịch bản thành từng câu khẳng định / câu hỏi độc lập"]
-    S1 --> S2["Bước 2 (Read-only Tool): search_sources(claim) & get_segment(code) lấy đoạn tài liệu gốc của khoá"]
-    S2 --> S3["Bước 3 (LLM Verifier - check_claim): Đối chiếu từng khẳng định với đoạn nguồn -> Phân loại: KHOP_NGUON | SAI_MAU_THUAN | THIEU_NGUON | LOI_CAU_HOI + Mã đoạn + Lý do"]
-    S3 --> G["Bước 4 (Code Guardrail): Kiểm tra mã đoạn trích dẫn có tồn tại thật trong nguồn không (chặn bịa mã nguồn); nếu gán KHOP_NGUON mà không có mã đoạn hợp lệ -> ép chuyển sang THIEU_NGUON"]
-    G --> H["Bước 5 (Human-in-the-loop - submit_for_review): Hiển thị bảng kiểm duyệt cho Giảng viên Chấp nhận / Sửa / Từ chối từng câu"]
+    U["Giảng viên đưa kịch bản / câu hỏi AI sinh vào rà soát"] --> S1["Bước 1 (code: split_claims): Tách đoạn thành từng câu, giữ câu quiz A./B./C. thành một khối"]
+    S1 --> S2["Bước 2 (công cụ chỉ đọc): search_sources từng câu + get_segment lấy tối đa 5 đoạn nguồn của khoá"]
+    S2 --> S3["Bước 3 (code: check_claim): mã nguồn thật / giả, injection, vượt quyền, đòi dữ liệu nhạy cảm, quiz lộ đáp án"]
+    S3 --> M["Bước 4 (1 lời gọi model: call_model): đối chiếu từng câu với nguồn, gắn 1 trong 5 nhãn KHOP_NGUON / SAI_MAU_THUAN / LOI_CAU_HOI / THIEU_NGUON / TU_CHOI + mã đoạn + lý do + gợi ý sửa"]
+    M --> G["Bước 5a (code guardrail): thay mã không tồn tại; KHOP_NGUON không có mã hợp lệ -> THIEU_NGUON; nhãn tổng = câu nặng nhất; tín hiệu tấn công -> khoá TU_CHOI"]
+    G --> H["Bước 5b (submit_for_review): bản nháp PENDING_LECTURER_REVIEW, không tự xuất bản -> giảng viên Chấp nhận / Sửa / Từ chối"]
 ```
-- **Hình dạng:** `[x] workflow cố định` · `[ ] một agent` · `[ ] nhiều agent` — **2 dòng lý do:** Mọi kịch bản đưa vào đều cần đi qua đúng chuỗi bước kiểm định nghiêm ngặt: Tách câu → Truy xuất đoạn nguồn → Đối chiếu khẳng định với nguồn → Kiểm tra mã đoạn bằng code → Trình giảng viên duyệt. Chọn **Workflow cố định** thay vì Agent tự do hay Multi-Agent giúp đảm bảo **không câu khẳng định nào bị bỏ qua bước kiểm tra mã nguồn bằng code**, chi phí token thấp, độ trễ ổn định và dễ đo lường tỷ lệ bỏ sót lỗi / báo nhầm.
+- **Hình dạng:** `[x] workflow cố định` · `[ ] một agent` · `[ ] nhiều agent` — **2 dòng lý do:** Mọi kịch bản đưa vào đều cần đi qua đúng chuỗi bước kiểm định nghiêm ngặt: Tách câu → Truy xuất đoạn nguồn → Kiểm quy tắc bằng code → Đối chiếu với nguồn (1 lời gọi model) → Hậu kiểm bằng code → Trình giảng viên duyệt. Chọn **Workflow cố định** thay vì Agent tự do hay Multi-Agent giúp đảm bảo **không câu khẳng định nào bị bỏ qua bước kiểm tra mã nguồn bằng code**, chi phí token thấp, độ trễ ổn định và dễ đo lường tỷ lệ bỏ sót lỗi / báo nhầm.
 - **AI dựa vào đâu** — mỗi công cụ (khớp `codebase/tools.py`):
 
   | Công cụ | Input | Output | Tác động ra ngoài? |
@@ -144,6 +145,7 @@ flowchart LR
 | 28/11 12:35 | Đổi model chính sang `google/gemini-3.1-flash-lite`, chạy đối chứng `google/gemini-4-hydrogen` (`run-3`, `run-4`) | `gemini-2.5-flash` đã ngừng, BTC không cho dùng trong bảng chi phí; cần tỉ lệ đạt đúng model được tính giá |
 | 28/11 12:45 | `cost/personas.yaml`: 1 lượt = 1 đoạn 7 câu, 5 lượt / phiên (= 35 câu / bài), đầu vào 10 đoạn ghép từ benchmark (seed 2026) | Bot v2 kiểm cả đoạn trong 1 lần gọi model; 35 lượt câu lẻ / phiên không sát cách dùng thật |
 | 28/11 13:05 | `codebase/ai.py`: đặt `max_tokens` = 4096 cho lời gọi OpenRouter | Mô phỏng `simulate-2` (hydrogen) lỗi 46/50 phiên HTTP 402: OpenRouter giữ trước 65.536 token / lời gọi khi không đặt `max_tokens`, tài khoản còn ít credit; giữ nguyên file lỗi, số hydrogen chỉ lấy 4 phiên hợp lệ |
+| 28/11 13:15 | §4: vẽ lại sơ đồ cho khớp bot v2 (`check_claim` là kiểm bằng code, model chỉ ở bước 4; thêm hậu kiểm gộp nhãn & khoá `TU_CHOI`) · README: tiêu đề + bảng tóm tắt, bỏ Mục 0 · `AGENTS.md`: quy ước nhóm | Sơ đồ cũ ghi `check_claim` là "LLM Verifier", lệch code (rubric R3: code khớp sơ đồ) |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)**
 

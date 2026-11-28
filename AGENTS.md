@@ -1,6 +1,6 @@
 # AGENTS.md — hướng dẫn cho coding agent (Claude Code, Cursor, Codex…) làm việc trong repo này
 
-> Ôn lại: ngày 12 · lab ngày 12. Nhóm sửa file này cho khớp bài của mình (thêm quy ước riêng, bỏ dòng không dùng).
+> Ôn lại: ngày 12 · lab ngày 12.
 
 ## Repo này là gì
 
@@ -16,6 +16,7 @@ python run.py eval               # chạy cả bộ → eval/run-N.csv + traces/
 python run.py score eval/run-N.csv
 python run.py simulate --try     # thử mô phỏng chi phí 10 phiên
 python run.py simulate           # mô phỏng chi phí → cost/simulate-N.csv
+python tests/run_stress.py --all # bộ chịu tải 27 câu + 24 câu benchmark (không tạo run-N)
 ```
 
 Khung chỉ dùng thư viện chuẩn của Python. Thêm thư viện thì ghi vào `requirements.txt`.
@@ -40,6 +41,6 @@ Khung chỉ dùng thư viện chuẩn của Python. Thêm thư viện thì ghi v
 
 ## Quy ước của nhóm
 
-- Ngôn ngữ trả lời người dùng: __
-- Phong cách code / đặt tên: __
-- Ai duyệt thay đổi do agent tạo trước khi commit: __
+- Ngôn ngữ trả lời người dùng: tiếng Việt (nhãn kiểm duyệt giữ nguyên dạng `KHOP_NGUON`, `SAI_MAU_THUAN`, `LOI_CAU_HOI`, `THIEU_NGUON`, `TU_CHOI`)
+- Phong cách code / đặt tên: Python chỉ thư viện chuẩn, `snake_case`, docstring tiếng Việt; mọi phép kiểm tất định (mã nguồn, tách câu, khoá `TU_CHOI`) làm bằng code, model chỉ ở bước 4; không sửa file khung
+- Ai duyệt thay đổi do agent tạo trước khi commit: người phụ trách phần đó (`spec.md` §10); bắt buộc chạy `python run.py check`, `python run.py eval --try` và `python tests/run_stress.py` không lùi điểm trước khi commit
