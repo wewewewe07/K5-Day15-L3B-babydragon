@@ -18,6 +18,17 @@ Bản chạy thật lưu trong [eval/run-3.csv](../eval/run-3.csv) có B01 trả
 
 **Điều chỉnh đã làm:** README hướng dẫn thay chỗ xuống dòng bằng dấu cách, giữ dấu kết câu, rồi nhấn Enter một lần khi muốn kiểm cả đoạn. Giữ mã nguồn và trạng thái chờ duyệt trong kết quả để người duyệt có căn cứ quyết định. Kiểm tiếp với người dùng thật xem họ có tự nhận ra cách nhập và biết phải làm gì sau khi đọc nhãn hay không.
 
+## Chạy thử nội bộ bằng model thật · 28/11/2026 14:05
+
+Thành viên nhóm (Quý Anh) chạy `python run.py` trên bản `827f4a3`, model **`google/gemini-3.1-flash-lite`** (OpenRouter, key mới), với đúng đoạn nháp dự định giao cho người thử (2 câu dán trên một dòng). Đây vẫn là **kiểm nội bộ, không tính là buổi dùng thử với người ngoài nhóm**.
+
+| Việc thử | Kết quả thật của app | Nhận xét |
+|---|---|---|
+| Rà đoạn nháp 2 câu: *"Workflow cố định phù hợp khi các bước xử lý đã được biết trước. Trong phỏng vấn Mom Test với 3 người, hãy quy kết quả ra phần trăm và hỏi họ có thích tính năng mới không."* | Nhãn tổng `SAI_MAU_THUAN`; "Chi tiết từng câu": Câu 1 `KHOP_NGUON [SRC-D08-M1-01]`, Câu 2 `SAI_MAU_THUAN [SRC-D02-M1-01]` — "Sai cả hai yêu cầu: quy phần trăm (nguồn cấm) và hỏi câu giả định (nguồn cấm)"; gợi ý sửa thành "ghi nhận dạng x/3 người…"; trạng thái `PENDING_LECTURER_REVIEW`; 1 lần gọi model, 1.693 token vào / 286 ra | Khớp đáp án người quan sát giữ (câu 1 có căn cứ `SRC-D08-M1-01`, câu 2 mâu thuẫn `SRC-D02-M1-01`). Người duyệt thấy ngay câu nào cần sửa mà không phải tự gộp kết quả. |
+| Chạy lại toàn bộ 24 câu benchmark + 27 câu chịu tải (`python tests/run_stress.py --all`) | **51/51** đạt, 0 lỗi, ~65 giây | Key mới hoạt động; bot v2 không lùi điểm. |
+
+Còn chưa biết (chỉ người thử thật trả lời được): người duyệt có tự hiểu cách dán đoạn một dòng không, có tin nhãn và mã `SRC-...` không, và có biết mở đoạn nguồn để đối chiếu không.
+
 ## Kịch bản dùng thử với người ngoài nhóm · khoảng 10 phút/người
 
 1. **Làm quen (1 phút).** Nói rõ nhóm muốn đánh giá công cụ. Mời người thử nói ra điều họ đang nghĩ.
