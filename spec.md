@@ -146,6 +146,7 @@ flowchart LR
 | 28/11 12:45 | `cost/personas.yaml`: 1 lượt = 1 đoạn 7 câu, 5 lượt / phiên (= 35 câu / bài), đầu vào 10 đoạn ghép từ benchmark (seed 2026) | Bot v2 kiểm cả đoạn trong 1 lần gọi model; 35 lượt câu lẻ / phiên không sát cách dùng thật |
 | 28/11 13:05 | `codebase/ai.py`: đặt `max_tokens` = 4096 cho lời gọi OpenRouter | Mô phỏng `simulate-2` (hydrogen) lỗi 46/50 phiên HTTP 402: OpenRouter giữ trước 65.536 token / lời gọi khi không đặt `max_tokens`, tài khoản còn ít credit; giữ nguyên file lỗi, số hydrogen chỉ lấy 4 phiên hợp lệ |
 | 28/11 13:15 | §4: vẽ lại sơ đồ cho khớp bot v2 (`check_claim` là kiểm bằng code, model chỉ ở bước 4; thêm hậu kiểm gộp nhãn & khoá `TU_CHOI`) · README: tiêu đề + bảng tóm tắt, bỏ Mục 0 · `AGENTS.md`: quy ước nhóm | Sơ đồ cũ ghi `check_claim` là "LLM Verifier", lệch code (rubric R3: code khớp sơ đồ) |
+| 28/11 13:29 | README: hướng dẫn cách dán đoạn kịch bản trong CLI. Ghi lượt chạy thử nội bộ và kịch bản thử người dùng trong `validation/log.md`. | CLI xử lý mỗi dòng thành một lượt. Ghép các câu trên cùng một dòng giúp người duyệt nhận một kết quả cho cả đoạn. |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)**
 

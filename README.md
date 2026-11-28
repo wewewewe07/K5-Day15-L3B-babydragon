@@ -58,6 +58,8 @@ Gõ `dir` (Windows) hoặc `ls` (macOS / Linux): thấy `run.py` và `README.md`
 
 Trong README này lệnh viết là `python …`; máy nhóm cần `python3` hay `py` thì gõ thay.
 
+Mỗi dòng nhập vào CLI được xử lý thành một lượt. Muốn kiểm cả đoạn kịch bản trong một lượt, thay các chỗ xuống dòng bằng dấu cách, giữ dấu kết câu và nhấn Enter một lần.
+
 ## Lệnh
 
 | Lệnh | Làm gì |
