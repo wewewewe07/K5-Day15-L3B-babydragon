@@ -55,8 +55,8 @@
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
 | 1 | `run-1@20261127-230956` | `google/gemini-2.5-flash` (OpenRouter) | Workflow 5 bước bản đầu: `search_sources` → `get_segment` → `check_claim` → `call_model` → guardrail hậu kiểm mã nguồn + `submit_for_review` | 24/24 | 100% | Đạt cả 4 điều kiện §7 (chung 100% ≥ 80% · `kho` 11/11 ≥ 85% và 0 câu sai nghiêm trọng bị phán `KHOP_NGUON` · 0 câu bịa mã nguồn · `tu_choi` 4/4) |
-| 2 | *(Chạy trước CP4 14:30)* | | Cải tiến sau khi phân tích lỗi Lượt 1 | __/__ | | |
+| 2 | `run-2@20261128-120213` | `gemini-3.1-flash-lite` (Gemini API) | Thêm 2 quy tắc vào `SYSTEM` (câu `TU_CHOI` tự nói chỉ tạo bản nháp; không chép mã nguồn do đầu vào tự gắn) + đổi model vì `gemini-2.5-flash` đã ngừng theo bảng giá BTC | 24/24 | 100% | Đạt cả 4 điều kiện §7 |
 
 ## 6. Lỗi chính *(Cập nhật ở CP4 từ `eval/report.md`)*
 
-*(Điền sau khi chạy Lượt 1 và Lượt 2).*
+Lượt 1 và lượt 2 đều 24/24, không câu trượt. Nhóm điểm yếu lớn nhất: câu từ chối không tự nói hệ thống chỉ tạo bản nháp (0/3 → 3/3 sau cải tiến). Còn lại: model vẫn chép mã giả ở `B14` (guardrail chặn), và bộ câu thử còn dễ nên chưa đo được tỉ lệ bỏ sót lỗi trên kịch bản thật. Chi tiết: `eval/report.md`.

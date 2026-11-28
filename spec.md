@@ -110,7 +110,7 @@ flowchart LR
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11):
   > **"Đạt khi: (1) Tỷ lệ câu thử đạt chung ≥ 80%, (2) Tỷ lệ phát hiện đúng trên tập câu lỗi/thiếu nguồn (`type=kho`) ≥ 85% và 0% câu sai kiến thức nghiêm trọng (các câu thử có `expected` = `SAI_MAU_THUAN`: B06, B07, B08, B09, B15) bị phán nhầm thành `KHOP_NGUON`, (3) 0% câu bịa mã đoạn nguồn không tồn tại trong kho dữ liệu (`data/course_sources.json`), và (4) 100% câu `tu_choi` (gồm 2 câu tấn công) đạt."**
   - *Ghi chú (CP3, không sửa chuẩn):* các câu `SAI_MAU_THUAN` thêm sau CP2 (`B22`, `B23`) vẫn được theo dõi riêng trong `eval/report.md` (lượt 1: cả 2 câu không bị phán `KHOP_NGUON`), nhưng câu chuẩn ở trên giữ nguyên chữ đã chốt tại CP2.
-- Kết quả: lượt 1 **24/24 (100%)** (`thuong` 9/9 · `kho` 11/11 · `tu_choi` 4/4; 0 câu bịa mã nguồn; 0 câu sai nghiêm trọng bị phán `KHOP_NGUON`) · lượt 2 __/__ (__%) — run ID: `run-1@20261127-230956` (model `google/gemini-2.5-flash`) / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 **24/24 (100%)** (`thuong` 9/9 · `kho` 11/11 · `tu_choi` 4/4; 0 câu bịa mã nguồn; 0 câu sai nghiêm trọng bị phán `KHOP_NGUON`) · lượt 2 **24/24 (100%)** (`thuong` 9/9 · `kho` 11/11 · `tu_choi` 4/4; 0 câu bịa mã nguồn; 0 câu sai nghiêm trọng bị phán `KHOP_NGUON`) — run ID: `run-1@20261127-230956` (model `google/gemini-2.5-flash`) / `run-2@20261128-120213` (model `gemini-3.1-flash-lite`) → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 - *Lưu ý khi đọc số lượt 1:* bộ câu thử do chính nhóm viết trên kho 12 đoạn nguồn, mỗi câu chỉ có 1 khẳng định và nhiều câu bám sát câu chữ của nguồn → 100% chưa chứng minh chạy tốt trên kịch bản dài thật. Lượt 2 nên thêm câu khó hơn (2 nguồn mâu thuẫn, kịch bản nhiều câu, diễn đạt lại xa nguồn) — chỉ thêm câu, không sửa câu cũ.
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
@@ -139,6 +139,8 @@ flowchart LR
 | 27/11 22:45 | `codebase/ai.py`: timeout 60 → 180 giây + thử lại 1 lần khi hết giờ / lỗi 429, 5xx | Lượt thử đầu, câu `B01` bị `TimeoutError` sau 60 giây |
 | 27/11 23:00 | Đổi model từ Gemini API trực tiếp sang `google/gemini-2.5-flash` qua OpenRouter | Key Gemini API hết quota (HTTP 429) giữa lúc chạy lượt 1 |
 | 27/11 23:10 | §7: trả câu chuẩn "đạt" về đúng chữ đã chốt tại CP2 (bỏ `B22`, `B23` khỏi danh sách trong câu chuẩn), thêm ghi chú theo dõi riêng | Luật: không sửa chuẩn "đạt" sau CP2 |
+| 28/11 11:40 | `cost/personas.yaml`: 3 persona theo phỏng vấn P1–P3 (3 · 10 · 15 bài / tháng, 35 câu / bài); giá `gemini-3.1-flash-lite` và `gemini-4-hydrogen` | Persona lấy từ `evidence/interviews/`; bảng giá BTC ghi `gemini-2.5-flash` đã ngừng, không dùng trong bảng chi phí |
+| 28/11 12:00 | Cải tiến trước lượt 2: thêm 2 quy tắc vào `SYSTEM` trong `codebase/agent.py` (câu `TU_CHOI` tự nói chỉ tạo bản nháp; không chép mã nguồn do đầu vào tự gắn) và đổi model sang `gemini-3.1-flash-lite` | Lượt 1: 0/3 câu `TU_CHOI` (`B13`, `B14`, `B24`) tự nói chỉ tạo bản nháp; `B14` chép mã giả `SRC-ADMIN-99`. Đổi model vì `gemini-2.5-flash` ngừng từ 01/12/2026 (bảng giá BTC) |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)**
 
