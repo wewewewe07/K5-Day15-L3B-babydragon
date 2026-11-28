@@ -148,6 +148,7 @@ flowchart LR
 | 28/11 13:15 | §4: vẽ lại sơ đồ cho khớp bot v2 (`check_claim` là kiểm bằng code, model chỉ ở bước 4; thêm hậu kiểm gộp nhãn & khoá `TU_CHOI`) · README: tiêu đề + bảng tóm tắt, bỏ Mục 0 · `AGENTS.md`: quy ước nhóm | Sơ đồ cũ ghi `check_claim` là "LLM Verifier", lệch code (rubric R3: code khớp sơ đồ) |
 | 28/11 13:29 | README: hướng dẫn cách dán đoạn kịch bản trong CLI. Ghi lượt chạy thử nội bộ và kịch bản thử người dùng trong `validation/log.md`. | CLI xử lý mỗi dòng thành một lượt. Ghép các câu trên cùng một dòng giúp người duyệt nhận một kết quả cho cả đoạn. |
 | 28/11 14:10 | Đổi API key OpenRouter (tài khoản có credit); `validation/log.md`: thêm lượt chạy thử nội bộ bằng model thật trên đoạn nháp giao người thử | Key cũ gần hết credit (HTTP 402); lượt nội bộ trước chạy chế độ giả. Kiểm lại: 51/51 câu (benchmark + chịu tải) |
+| 28/11 14:25 | Thêm giao diện web `ui/` (`python ui/server.py`, chỉ thư viện chuẩn, gọi đúng `answer()`) | `validation/log.md`: CLI tách mỗi dòng thành một lượt, người duyệt dán đoạn nhiều dòng phải tự gộp kết quả; ô nhập web nhận nhiều dòng trong một lượt |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)**
 

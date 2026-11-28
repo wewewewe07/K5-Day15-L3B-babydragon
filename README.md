@@ -8,7 +8,7 @@
 
 | | |
 |---|---|
-| Chạy thử | `python run.py` → dán kịch bản (cần `.env` theo [.env.example](.env.example)) |
+| Chạy thử | `python run.py` (dòng lệnh) hoặc `python ui/server.py` (giao diện web) → dán kịch bản (cần `.env` theo [.env.example](.env.example)) |
 | Model | `google/gemini-3.1-flash-lite` qua OpenRouter (đối chứng `google/gemini-4-hydrogen`) |
 | Đánh giá | 24 câu thử · lượt 1 → 2: **24/24 → 24/24** · bộ chịu tải 27 câu khó: **21/26 → 26/26** → [eval/README.md](eval/README.md), [eval/report.md](eval/report.md) |
 | Chi phí | **$0.0065 / bài duyệt thành công** · $0.72 / tháng cho 12 người duyệt → [cost/cost-estimate.md](cost/cost-estimate.md) |
@@ -65,6 +65,7 @@ Mỗi dòng nhập vào CLI được xử lý thành một lượt. Muốn kiể
 | Lệnh | Làm gì |
 |---|---|
 | `python run.py` | Chạy bản chạy thử (gõ đầu vào, nhận kết quả, kèm số lần gọi model / token) |
+| `python ui/server.py` | Giao diện web cho bản chạy thử (http://127.0.0.1:8765): dán đoạn kịch bản nhiều dòng, câu hỏi mẫu theo nhóm, nhãn tô màu, chi tiết từng câu, token / lần gọi model, kho 12 đoạn nguồn. Gọi đúng `answer()` như `run.py` |
 | `python run.py check` | Kiểm `eval/benchmark.csv` (6 cột, số câu, `kho` / `tu_choi`, mã `source`, ô trống, dòng mẫu) `eval/metric_spec.yaml` (≥3 metric điền đủ) và `TEAMS.md` (đúng format để BTC quét). Chỉ cảnh báo, không sửa file |
 | `python run.py eval --try` | **Thử nối model:** chạy 3 câu đầu (`--try 5` = 5 câu) → `eval/run-try.csv`. Thấy "Nối model được" là xong. Không tính là một lượt |
 | `python run.py eval` | Chạy cả bộ qua `codebase/agent.py` → `eval/run-1.csv` (lần sau `run-2.csv`…) + `traces/run-1.jsonl`. Mỗi dòng có run ID, model, số lần gọi model / công cụ, token. Model còn giả → chỉ ghi `run-mock.csv`; mọi câu lỗi → `run-error.csv`; Ctrl+C → `run-stopped.csv` — đều **không** được đánh số |
